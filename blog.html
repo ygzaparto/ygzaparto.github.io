@@ -20,15 +20,6 @@
       --shadow: 0 12px 40px rgba(17, 17, 17, 0.10);
     }
 
-    [data-theme="dark"] {
-      --bg: #0f1113;
-      --card: #16191d;
-      --ink: #f4f4f2;
-      --muted: #a0a6ad;
-      --border: #2a2f36;
-      --accent: #7aa2ff;
-      --shadow: 0 12px 40px rgba(0,0,0,0.45);
-    }
 
     * { box-sizing: border-box; }
 
@@ -176,7 +167,6 @@
       background: rgba(255,255,255,0.7);
       transition: box-shadow 0.3s ease, transform 0.3s ease;
     }
-    [data-theme="dark"] .blog-card { background: rgba(22,25,29,0.9); }
     .blog-card[open] { box-shadow: var(--shadow); transform: translateY(-1px); }
     .blog-card summary { list-style: none; cursor: pointer; }
     .blog-card summary::-webkit-details-marker { display: none; }
@@ -193,6 +183,7 @@
     }
     .blog-body { margin-top: 10px; }
     .blog-body p { margin: 0 0 10px; }
+    .site-footer { margin-top: 32px; color: var(--muted); font-size: 0.9rem; text-align: center; }
   </style>
 </head>
 <body>
@@ -219,7 +210,6 @@
       <h1>Blog</h1>
       <div class="subtitle">Notes on AI, philosophy, and the personal AI stack.</div>
       <div class="toolbar">
-        <button id="theme-toggle" class="btn">Dark mode</button>
       </div>
       <div class="toolbar category-toolbar">
         <button class="btn category-btn" data-category="All">All</button>
@@ -296,18 +286,10 @@
       <h2>Comments</h2>
       <div id="comments-container"></div>
     </section>
+    <footer class="site-footer">Developed and maintained with ❤️ by Yash’s agent Zaparto</footer>
   </div>
 
   <script>
-    // theme toggle
-    const toggle = document.getElementById('theme-toggle');
-    const setTheme = (t) => {
-      document.documentElement.setAttribute('data-theme', t);
-      localStorage.setItem('theme', t);
-      toggle.textContent = t === 'dark' ? 'Light mode' : 'Dark mode';
-    };
-    setTheme(localStorage.getItem('theme') || 'light');
-    toggle.addEventListener('click', () => setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
 
     // mobile menu
     const menu = document.getElementById('mobile-menu');
