@@ -1,14 +1,200 @@
 <!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title>Hello</title>
-    <style>
-      body { font-family: system-ui, sans-serif; display: grid; place-items: center; min-height: 100vh; margin: 0; }
-      h1 { font-size: 3rem; }
-    </style>
-  </head>
-  <body>
-    <h1>Hello</h1>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yash Gupta — Portfolio</title>
+  <style>
+    :root {
+      --bg: #f7f7f5;
+      --ink: #111;
+      --muted: #5a5a5a;
+      --card: #fff;
+      --border: #e6e6e3;
+      --accent: #111;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.55;
+    }
+    .wrap {
+      max-width: 980px;
+      margin: 64px auto;
+      padding: 0 24px 80px;
+    }
+    header {
+      display: grid;
+      gap: 8px;
+      padding: 24px 0 8px;
+    }
+    h1 {
+      font-size: 2.4rem;
+      letter-spacing: -0.02em;
+      margin: 0;
+    }
+    .subtitle {
+      font-size: 1.05rem;
+      color: var(--muted);
+    }
+    .pill {
+      display: inline-block;
+      padding: 4px 10px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 0.85rem;
+      color: var(--muted);
+      background: #fafafa;
+    }
+    .grid {
+      display: grid;
+      gap: 16px;
+      margin-top: 24px;
+    }
+    @media (min-width: 860px) {
+      .grid { grid-template-columns: 2fr 1fr; }
+    }
+    section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 20px;
+    }
+    h2 {
+      font-size: 1.1rem;
+      margin: 0 0 12px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--muted);
+    }
+    .item { margin-bottom: 14px; }
+    .item:last-child { margin-bottom: 0; }
+    .role { font-weight: 600; }
+    .meta { color: var(--muted); font-size: 0.95rem; }
+    ul { margin: 8px 0 0 20px; padding: 0; }
+    a { color: var(--accent); text-decoration: none; border-bottom: 1px solid #ddd; }
+    a:hover { border-bottom-color: #999; }
+    .footer {
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <span class="pill">Portfolio</span>
+      <h1>Yash Gupta</h1>
+      <div class="subtitle">Senior Software Engineer, Platform — C3 AI · Redwood City, CA</div>
+      <div class="meta">Interests: Distributed Systems · Machine Learning</div>
+    </header>
+
+    <div class="grid">
+      <div>
+        <section>
+          <h2>About</h2>
+          <p>Focused on building scalable, production‑grade AI systems. Interests centered on distributed systems and machine learning.</p>
+        </section>
+
+        <section style="margin-top:16px;">
+          <h2>Experience</h2>
+
+          <div class="item">
+            <div class="role">Senior Software Engineer, Platform — C3 AI</div>
+            <div class="meta">Jul 2021 – Present · Redwood City, CA · On‑site</div>
+            <div class="meta">Building Agentic AI Platform · <a href="https://c3.ai/c3-agentic-ai-platform/" target="_blank" rel="noreferrer">Link</a></div>
+          </div>
+
+          <div class="item">
+            <div class="role">Corporate VC Associate — Corporate Startup Lab (CMU Swartz Center)</div>
+            <div class="meta">Feb 2021 – May 2021 · United States</div>
+          </div>
+
+          <div class="item">
+            <div class="role">Graduate Research Intern (CyLab & Bossanova) — Carnegie Mellon University</div>
+            <div class="meta">May 2020 – May 2021 · Pittsburgh, PA</div>
+            <div class="meta" style="margin-top:6px;">Bossanova Robotics (May–Aug 2020)</div>
+            <ul>
+              <li>Built ResNet50/EfficientNet models in PyTorch on 5M+ images to detect misplaced/out‑of‑stock products.</li>
+              <li>Achieved &gt;95% pairwise accuracy.</li>
+            </ul>
+            <div class="meta" style="margin-top:6px;">Prof. Osman Yagan (Jan–May 2021)</div>
+            <ul>
+              <li>Worked with ThaiBev to improve customer acquisition and revenue via targeted promotions.</li>
+            </ul>
+          </div>
+
+          <div class="item">
+            <div class="role">Research Assistant — Nanyang Technological University</div>
+            <div class="meta">Jan 2019 – May 2019 · Singapore</div>
+          </div>
+
+          <div class="item">
+            <div class="role">Research Assistant — Ghent University</div>
+            <div class="meta">May 2018 – Jun 2018 · Gent Area, Belgium</div>
+          </div>
+        </section>
+
+        <section style="margin-top:16px;">
+          <h2>Projects</h2>
+          <div class="item">
+            <div class="role">PandasAI</div>
+            <div class="meta">Maker & contributor · 10k+ GitHub stars · $1M+ funding</div>
+          </div>
+        </section>
+      </div>
+
+      <div>
+        <section>
+          <h2>Education</h2>
+          <div class="item">
+            <div class="role">Carnegie Mellon University</div>
+            <div class="meta">MS, Electrical & Computer Engineering · GPA 3.89/4.0</div>
+            <div class="meta">Eta Kappa Nu ECE Honors Society</div>
+          </div>
+          <div class="item">
+            <div class="role">Manipal Institute of Technology</div>
+            <div class="meta">BTech, Electronics & Communications Engineering · GPA 9.25/10</div>
+            <div class="meta">VP IE‑E&amp;C</div>
+          </div>
+        </section>
+
+        <section style="margin-top:16px;">
+          <h2>Awards</h2>
+          <div class="item">
+            <div class="role">Nikola Tesla Electrical Engineering Scholar (declined)</div>
+            <div class="meta">Columbia University · Feb 2019</div>
+          </div>
+          <div class="item">
+            <div class="role">Gold Medal for Excellence in Academics</div>
+            <div class="meta">Mar 2017</div>
+          </div>
+          <div class="item">
+            <div class="role">Merit Scholarship</div>
+            <div class="meta">Manipal University · Jul 2015</div>
+          </div>
+        </section>
+
+        <section style="margin-top:16px;">
+          <h2>Test Scores</h2>
+          <div class="item">
+            <div class="role">GRE — 326 (168Q / 158V)</div>
+            <div class="meta">Oct 2018</div>
+          </div>
+        </section>
+
+        <section style="margin-top:16px;">
+          <h2>Contact</h2>
+          <div class="item"><a href="https://www.linkedin.com/in/yash-cmu" target="_blank" rel="noreferrer">LinkedIn</a></div>
+        </section>
+
+        <div class="footer">More details (skills, full project list, contact links) can be added anytime.</div>
+      </div>
+    </div>
+  </div>
+</body>
 </html>
