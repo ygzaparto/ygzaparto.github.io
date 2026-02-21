@@ -160,6 +160,10 @@
     .timeline { border-left: 2px solid var(--border); padding-left: 16px; }
     .timeline .item { position: relative; padding-bottom: 4px; }
     .timeline .item::before { content: ""; position: absolute; left: -24px; top: 6px; width: 8px; height: 8px; border-radius: 50%; background: var(--border); }
+    .exp-details summary { cursor: pointer; list-style: none; }
+    .exp-details summary::-webkit-details-marker { display: none; }
+    .exp-details .summary-line { display: grid; gap: 4px; }
+    .exp-details[open] .summary-line { margin-bottom: 8px; }
     ul { margin: 8px 0 0 20px; padding: 0; }
     a { color: var(--ink); text-decoration: none; border-bottom: 1px solid #d5d1c9; }
     a:hover { border-bottom-color: #999; }
@@ -209,34 +213,61 @@
           <h2>Experience</h2>
           <div class="timeline">
             <div class="item">
-              <div class="role">Senior Software Engineer, Platform — C3 AI</div>
-              <div class="meta">Jul 2021 – Present · Redwood City, CA · On‑site</div>
-              <div class="meta">Building Agentic AI Platform · <a href="https://c3.ai/c3-agentic-ai-platform/" target="_blank" rel="noreferrer">Link</a></div>
+              <details class="exp-details">
+                <summary class="summary-line">
+                  <div class="role">Senior Software Engineer, Platform — C3 AI</div>
+                  <div class="meta">Jul 2021 – Present · Redwood City, CA · On‑site</div>
+                  <div class="meta">Building Agentic AI Platform · <a href="https://c3.ai/c3-agentic-ai-platform/" target="_blank" rel="noreferrer">Link</a></div>
+                </summary>
+                <ul>
+                  <li>Building agentic AI platform for enterprise workloads.</li>
+                  <li>Focus on reliability, scale, and production delivery.</li>
+                </ul>
+              </details>
             </div>
             <div class="item">
-              <div class="role">Corporate VC Associate — Corporate Startup Lab (CMU Swartz Center)</div>
-              <div class="meta">Feb 2021 – May 2021 · United States</div>
+              <details class="exp-details">
+                <summary class="summary-line">
+                  <div class="role">Corporate VC Associate — Corporate Startup Lab (CMU Swartz Center)</div>
+                  <div class="meta">Feb 2021 – May 2021 · United States</div>
+                </summary>
+                <ul>
+                  <li>Evaluated early‑stage startups and market opportunities.</li>
+                </ul>
+              </details>
             </div>
             <div class="item">
-              <div class="role">Graduate Research Intern (CyLab & Bossanova) — Carnegie Mellon University</div>
-              <div class="meta">May 2020 – May 2021 · Pittsburgh, PA</div>
-              <div class="meta" style="margin-top:6px;">Bossanova Robotics (May–Aug 2020)</div>
-              <ul>
-                <li>Built ResNet50/EfficientNet models in PyTorch on 5M+ images to detect misplaced/out‑of‑stock products.</li>
-                <li>Achieved &gt;95% pairwise accuracy.</li>
-              </ul>
-              <div class="meta" style="margin-top:6px;">Prof. Osman Yagan (Jan–May 2021)</div>
-              <ul>
-                <li>Worked with ThaiBev to improve customer acquisition and revenue via targeted promotions.</li>
-              </ul>
+              <details class="exp-details">
+                <summary class="summary-line">
+                  <div class="role">Graduate Research Intern (CyLab & Bossanova) — Carnegie Mellon University</div>
+                  <div class="meta">May 2020 – May 2021 · Pittsburgh, PA</div>
+                </summary>
+                <div class="meta" style="margin-top:6px;">Bossanova Robotics (May–Aug 2020)</div>
+                <ul>
+                  <li>Built ResNet50/EfficientNet models in PyTorch on 5M+ images to detect misplaced/out‑of‑stock products.</li>
+                  <li>Achieved &gt;95% pairwise accuracy.</li>
+                </ul>
+                <div class="meta" style="margin-top:6px;">Prof. Osman Yagan (Jan–May 2021)</div>
+                <ul>
+                  <li>Worked with ThaiBev to improve customer acquisition and revenue via targeted promotions.</li>
+                </ul>
+              </details>
             </div>
             <div class="item">
-              <div class="role">Research Assistant — Nanyang Technological University</div>
-              <div class="meta">Jan 2019 – May 2019 · Singapore</div>
+              <details class="exp-details">
+                <summary class="summary-line">
+                  <div class="role">Research Assistant — Nanyang Technological University</div>
+                  <div class="meta">Jan 2019 – May 2019 · Singapore</div>
+                </summary>
+              </details>
             </div>
             <div class="item">
-              <div class="role">Research Assistant — Ghent University</div>
-              <div class="meta">May 2018 – Jun 2018 · Gent Area, Belgium</div>
+              <details class="exp-details">
+                <summary class="summary-line">
+                  <div class="role">Research Assistant — Ghent University</div>
+                  <div class="meta">May 2018 – Jun 2018 · Gent Area, Belgium</div>
+                </summary>
+              </details>
             </div>
           </div>
         </section>
