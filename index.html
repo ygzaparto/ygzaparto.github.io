@@ -320,308 +320,350 @@
   <script src="https://unpkg.com/htm@3.1.1/dist/htm.umd.js"></script>
 
   <script>
-    const { useEffect, useState } = React;
-    const html = htm.bind(React.createElement);
+  (function () {
+    function loadHtm(cb) {
+      if (window.htm) return cb();
+      var s = document.createElement('script');
+      s.src = 'https://unpkg.com/htm@3.1.1/dist/htm.umd.js';
+      s.onload = cb;
+      document.head.appendChild(s);
+    }
 
-    const data = {
-      name: "Yash Gupta",
-      title: "Senior Software Engineer, Platform — C3 AI",
-      location: "Redwood City, CA · On‑site",
-      interests: "Distributed Systems · Machine Learning",
-      badges: ["Building Agentic AI Platform", "LLMs · Generative AI"],
-      about: "Focused on building scalable, production‑grade AI systems. Interests centered on distributed systems and machine learning.",
-      experience: [
-        {
-          role: "Senior Software Engineer, Platform — C3 AI",
-          meta: "Jul 2021 – Present · Redwood City, CA · On‑site",
-          link: "https://c3.ai/c3-agentic-ai-platform/",
-          details: ["Building Agentic AI Platform"],
-        },
-        {
-          role: "Corporate VC Associate — Corporate Startup Lab (CMU Swartz Center)",
-          meta: "Feb 2021 – May 2021 · United States",
-          details: [],
-        },
-        {
-          role: "Graduate Research Intern (CyLab & Bossanova) — Carnegie Mellon University",
-          meta: "May 2020 – May 2021 · Pittsburgh, PA",
-          details: [
-            "Bossanova Robotics (May–Aug 2020): Built ResNet50/EfficientNet models in PyTorch on 5M+ images to detect misplaced/out‑of‑stock products. Achieved >95% pairwise accuracy.",
-            "Prof. Osman Yagan (Jan–May 2021): Worked with ThaiBev to improve customer acquisition and revenue via targeted promotions.",
-          ],
-        },
-        {
-          role: "Research Assistant — Nanyang Technological University",
-          meta: "Jan 2019 – May 2019 · Singapore",
-          details: [],
-        },
-        {
-          role: "Research Assistant — Ghent University",
-          meta: "May 2018 – Jun 2018 · Gent Area, Belgium",
-          details: [],
-        },
-      ],
-      projects: [
-        { name: "PandasAI", meta: "Maker & contributor · 10k+ GitHub stars · $1M+ funding" },
-      ],
-      blogs: [
-        {
-          title: "AI in 2026: The Stack Has Shifted",
-          date: "Feb 2026",
-          summary: "Models are table stakes; systems are the moat.",
-          tags: ["AI Trends", "Systems", "Production"],
-          body: [
-            "The model is no longer the product. The product is the system: retrieval, tool use, evaluation, and monitoring working together under strict latency and cost constraints.",
-            "Teams that win treat prompts and tools like software artifacts — versioned, tested, and instrumented — and they route tasks across a portfolio of models rather than betting on a single one.",
-            "The new differentiator is feedback. Data flywheels, human review, and automated evals turn good demos into reliable systems.",
-            "We’re seeing a shift toward thinner model layers and thicker orchestration layers: caching, routing, agent policies, and observability.",
-            "Infrastructure is the advantage, and operational rigor is what scales AI beyond novelty.",
-          ],
-        },
-        {
-          title: "Agents Need Constraints, Not Magic",
-          date: "Feb 2026",
-          summary: "Durability comes from guardrails and verification.",
-          tags: ["Agents", "Safety", "Product"],
-          body: [
-            "Great agents look less like free‑form chat and more like constrained workflows. The secret is making actions explicit, reversible, and observable.",
-            "Permissions should be scoped, tool contracts should be clear, and every critical step should have a verification layer — automatic or human‑in‑the‑loop.",
-            "This approach feels slower at first, but it prevents silent failures, reduces risk, and builds user trust over time.",
-            "The best teams design for failure early: fallback plans, safe defaults, and metrics that make errors visible.",
-            "The future is not “hands‑off AI” — it’s “hands‑on leverage.”",
-          ],
-        },
-        {
-          title: "OpenClaw & the Personal AI Stack",
-          date: "Feb 2026",
-          summary: "Local‑first assistants and owned context.",
-          tags: ["OpenClaw", "Future", "Privacy"],
-          body: [
-            "Recent OpenClaw work points to a future where assistants run close to your data and integrate services without handing control to a single cloud vendor.",
-            "Local workflows, configurable tool gateways, and granular permissions make the assistant powerful but contained.",
-            "Pairing local context with selective cloud compute gives you speed, privacy, and flexibility — without sacrificing capability.",
-            "The endgame is a personal AI operating layer: secure, composable, and tuned to how you work.",
-            "That’s the path to assistants that feel less like chatbots and more like real infrastructure.",
-          ],
-        },
-      ],
-      education: [
-        { name: "Carnegie Mellon University", meta: "MS, Electrical & Computer Engineering · GPA 3.89/4.0", extra: "Eta Kappa Nu ECE Honors Society" },
-        { name: "Manipal Institute of Technology", meta: "BTech, Electronics & Communications Engineering · GPA 9.25/10", extra: "VP IE‑E&C" },
-      ],
-      awards: [
-        { name: "Nikola Tesla Electrical Engineering Scholar (declined)", meta: "Columbia University · Feb 2019" },
-        { name: "Gold Medal for Excellence in Academics", meta: "Mar 2017" },
-        { name: "Merit Scholarship", meta: "Manipal University · Jul 2015" },
-      ],
-      scores: [
-        { name: "GRE — 326 (168Q / 158V)", meta: "Oct 2018" },
-      ],
-      contact: {
-        linkedin: "https://www.linkedin.com/in/yash-cmu",
-        email: null,
-      }
-    };
+    function start() {
+      var React = window.React;
+      var ReactDOM = window.ReactDOM;
+      var html = window.htm.bind(React.createElement);
+      var useEffect = React.useEffect;
+      var useState = React.useState;
 
-    const navItems = [
-      { id: 'about', label: 'About' },
-      { id: 'experience', label: 'Experience' },
-      { id: 'projects', label: 'Projects' },
-      { id: 'blog', label: 'Blog' },
-      { id: 'education', label: 'Education' },
-      { id: 'awards', label: 'Awards' },
-      { id: 'scores', label: 'Scores' },
-      { id: 'contact', label: 'Contact' },
-    ];
-
-    function useReveal() {
-      useEffect(() => {
-        const elements = document.querySelectorAll('[data-reveal]');
-        const observer = new IntersectionObserver(
-          entries => {
-            entries.forEach(entry => {
-              if (entry.isIntersecting) entry.target.classList.add('visible');
-            });
+      var data = {
+        name: "Yash Gupta",
+        title: "Senior Software Engineer, Platform — C3 AI",
+        location: "Redwood City, CA · On‑site",
+        interests: "Distributed Systems · Machine Learning",
+        badges: ["Building Agentic AI Platform", "LLMs · Generative AI"],
+        about: "Focused on building scalable, production‑grade AI systems. Interests centered on distributed systems and machine learning.",
+        experience: [
+          {
+            role: "Senior Software Engineer, Platform — C3 AI",
+            meta: "Jul 2021 – Present · Redwood City, CA · On‑site",
+            link: "https://c3.ai/c3-agentic-ai-platform/",
+            details: ["Building Agentic AI Platform"],
           },
-          { threshold: 0.12 }
-        );
-        elements.forEach(el => observer.observe(el));
-        return () => observer.disconnect();
-      }, []);
-    }
-
-    function ThemeToggle() {
-      const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
-
-      useEffect(() => {
-        document.documentElement.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
-        localStorage.setItem('theme', theme);
-      }, [theme]);
-
-      return html`<button className="btn" onClick=${() => setTheme(t => (t === 'dark' ? 'light' : 'dark'))}>${theme === 'dark' ? 'Light mode' : 'Dark mode'}</button>`;
-    }
-
-    function CopyEmail({ email }) {
-      const [copied, setCopied] = useState(false);
-      if (!email) return null;
-      return html`<button className="btn" onClick=${() => {
-        navigator.clipboard.writeText(email);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 1400);
-      }}>${copied ? 'Copied' : 'Copy email'}</button>`;
-    }
-
-    function App() {
-      const [active, setActive] = useState(0);
-      const [menuOpen, setMenuOpen] = useState(false);
-
-      const scrollTo = (id) => {
-        const el = document.getElementById(id);
-        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        setMenuOpen(false);
+          {
+            role: "Corporate VC Associate — Corporate Startup Lab (CMU Swartz Center)",
+            meta: "Feb 2021 – May 2021 · United States",
+            details: [],
+          },
+          {
+            role: "Graduate Research Intern (CyLab & Bossanova) — Carnegie Mellon University",
+            meta: "May 2020 – May 2021 · Pittsburgh, PA",
+            details: [
+              "Bossanova Robotics (May–Aug 2020): Built ResNet50/EfficientNet models in PyTorch on 5M+ images to detect misplaced/out‑of‑stock products. Achieved >95% pairwise accuracy.",
+              "Prof. Osman Yagan (Jan–May 2021): Worked with ThaiBev to improve customer acquisition and revenue via targeted promotions.",
+            ],
+          },
+          {
+            role: "Research Assistant — Nanyang Technological University",
+            meta: "Jan 2019 – May 2019 · Singapore",
+            details: [],
+          },
+          {
+            role: "Research Assistant — Ghent University",
+            meta: "May 2018 – Jun 2018 · Gent Area, Belgium",
+            details: [],
+          },
+        ],
+        projects: [
+          { name: "PandasAI", meta: "Maker & contributor · 10k+ GitHub stars · $1M+ funding" },
+        ],
+        blogs: [
+          {
+            title: "AI in 2026: The Stack Has Shifted",
+            date: "Feb 2026",
+            summary: "Models are table stakes; systems are the moat.",
+            tags: ["AI Trends", "Systems", "Production"],
+            body: [
+              "The model is no longer the product. The product is the system: retrieval, tool use, evaluation, and monitoring working together under strict latency and cost constraints.",
+              "Teams that win treat prompts and tools like software artifacts — versioned, tested, and instrumented — and they route tasks across a portfolio of models rather than betting on a single one.",
+              "The new differentiator is feedback. Data flywheels, human review, and automated evals turn good demos into reliable systems.",
+              "We’re seeing a shift toward thinner model layers and thicker orchestration layers: caching, routing, agent policies, and observability.",
+              "Infrastructure is the advantage, and operational rigor is what scales AI beyond novelty.",
+            ],
+          },
+          {
+            title: "Agents Need Constraints, Not Magic",
+            date: "Feb 2026",
+            summary: "Durability comes from guardrails and verification.",
+            tags: ["Agents", "Safety", "Product"],
+            body: [
+              "Great agents look less like free‑form chat and more like constrained workflows. The secret is making actions explicit, reversible, and observable.",
+              "Permissions should be scoped, tool contracts should be clear, and every critical step should have a verification layer — automatic or human‑in‑the‑loop.",
+              "This approach feels slower at first, but it prevents silent failures, reduces risk, and builds user trust over time.",
+              "The best teams design for failure early: fallback plans, safe defaults, and metrics that make errors visible.",
+              "The future is not “hands‑off AI” — it’s “hands‑on leverage.”",
+            ],
+          },
+          {
+            title: "OpenClaw & the Personal AI Stack",
+            date: "Feb 2026",
+            summary: "Local‑first assistants and owned context.",
+            tags: ["OpenClaw", "Future", "Privacy"],
+            body: [
+              "Recent OpenClaw work points to a future where assistants run close to your data and integrate services without handing control to a single cloud vendor.",
+              "Local workflows, configurable tool gateways, and granular permissions make the assistant powerful but contained.",
+              "Pairing local context with selective cloud compute gives you speed, privacy, and flexibility — without sacrificing capability.",
+              "The endgame is a personal AI operating layer: secure, composable, and tuned to how you work.",
+              "That’s the path to assistants that feel less like chatbots and more like real infrastructure.",
+            ],
+          },
+        ],
+        education: [
+          { name: "Carnegie Mellon University", meta: "MS, Electrical & Computer Engineering · GPA 3.89/4.0", extra: "Eta Kappa Nu ECE Honors Society" },
+          { name: "Manipal Institute of Technology", meta: "BTech, Electronics & Communications Engineering · GPA 9.25/10", extra: "VP IE‑E&C" },
+        ],
+        awards: [
+          { name: "Nikola Tesla Electrical Engineering Scholar (declined)", meta: "Columbia University · Feb 2019" },
+          { name: "Gold Medal for Excellence in Academics", meta: "Mar 2017" },
+          { name: "Merit Scholarship", meta: "Manipal University · Jul 2015" },
+        ],
+        scores: [
+          { name: "GRE — 326 (168Q / 158V)", meta: "Oct 2018" },
+        ],
+        contact: {
+          linkedin: "https://www.linkedin.com/in/yash-cmu",
+          email: null,
+        }
       };
 
-      useReveal();
+      var navItems = [
+        { id: 'about', label: 'About' },
+        { id: 'experience', label: 'Experience' },
+        { id: 'projects', label: 'Projects' },
+        { id: 'blog', label: 'Blog' },
+        { id: 'education', label: 'Education' },
+        { id: 'awards', label: 'Awards' },
+        { id: 'scores', label: 'Scores' },
+        { id: 'contact', label: 'Contact' },
+      ];
 
-      return html`
-        <div className="wrap">
-          <div className="topbar">
-            <div className="brand">${data.name}</div>
-            <nav className="nav-links">
-              ${navItems.map(item => html`<a key=${item.id} href=${`#${item.id}`} onClick=${(e) => { e.preventDefault(); scrollTo(item.id); }}>${item.label}</a>`)}
-            </nav>
-            <button className="menu-btn" onClick=${() => setMenuOpen(true)}>Menu ☰</button>
+      function useReveal() {
+        useEffect(function () {
+          var elements = document.querySelectorAll('[data-reveal]');
+          var observer = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (entry) {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+              });
+            },
+            { threshold: 0.12 }
+          );
+          elements.forEach(function (el) { observer.observe(el); });
+          return function () { observer.disconnect(); };
+        }, []);
+      }
+
+      function ThemeToggle() {
+        var _a = useState(function () { return localStorage.getItem('theme') || 'light'; }),
+          theme = _a[0],
+          setTheme = _a[1];
+
+        useEffect(function () {
+          document.documentElement.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
+          localStorage.setItem('theme', theme);
+        }, [theme]);
+
+        return html`<button className="btn" onClick=${function () { return setTheme(function (t) { return (t === 'dark' ? 'light' : 'dark'); }); }}>
+          ${theme === 'dark' ? 'Light mode' : 'Dark mode'}
+        </button>`;
+      }
+
+      function CopyEmail(props) {
+        var email = props.email;
+        var _a = useState(false), copied = _a[0], setCopied = _a[1];
+        if (!email) return null;
+        return html`<button className="btn" onClick=${function () {
+          navigator.clipboard.writeText(email);
+          setCopied(true);
+          setTimeout(function () { return setCopied(false); }, 1400);
+        }}>${copied ? 'Copied' : 'Copy email'}</button>`;
+      }
+
+      function App() {
+        var _a = useState(0), active = _a[0], setActive = _a[1];
+        var _b = useState(false), menuOpen = _b[0], setMenuOpen = _b[1];
+
+        function scrollTo(id) {
+          var el = document.getElementById(id);
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          setMenuOpen(false);
+        }
+
+        useReveal();
+
+        return html`
+          <div className="wrap">
+            <div className="topbar">
+              <div className="brand">${data.name}</div>
+              <nav className="nav-links">
+                ${navItems.map(function (item) {
+                  return html`<a key=${item.id} href=${`#${item.id}`} onClick=${function (e) { e.preventDefault(); scrollTo(item.id); }}>
+                    ${item.label}
+                  </a>`;
+                })}
+              </nav>
+              <button className="menu-btn" onClick=${function () { return setMenuOpen(true); }}>Menu ☰</button>
+            </div>
+
+            <div className=${`mobile-menu ${menuOpen ? 'open' : ''}`} onClick=${function () { return setMenuOpen(false); }}>
+              <div className="mobile-panel" onClick=${function (e) { return e.stopPropagation(); }}>
+                ${navItems.map(function (item) {
+                  return html`<a key=${item.id} href=${`#${item.id}`} onClick=${function (e) { e.preventDefault(); scrollTo(item.id); }}>
+                    ${item.label}
+                  </a>`;
+                })}
+                ${html`<${ThemeToggle} />`}
+              </div>
+            </div>
+
+            <div className="hero reveal" data-reveal>
+              <div className="eyebrow">Portfolio</div>
+              <h1>${data.name}</h1>
+              <div className="subtitle">${data.title}</div>
+              <div className="meta-line">
+                <span>${data.location}</span>
+                <span>Interests: ${data.interests}</span>
+              </div>
+              <div className="meta-line">
+                ${data.badges.map(function (b) { return html`<span key=${b} className="pill">${b}</span>`; })}
+              </div>
+              <div className="toolbar">
+                ${html`<${ThemeToggle} />`}
+              </div>
+            </div>
+
+            <div className="grid">
+              <div>
+                <section id="about" className="reveal" data-reveal>
+                  <h2>About</h2>
+                  <p>${data.about}</p>
+                </section>
+
+                <section id="experience" className="reveal" data-reveal style=${{ marginTop: 16 }}>
+                  <h2>Experience</h2>
+                  <div className="timeline">
+                    ${data.experience.map(function (x, idx) {
+                      return html`
+                        <div
+                          key=${x.role}
+                          className=${`item ${idx === active ? 'active' : ''}`}
+                          onMouseEnter=${function () { return setActive(idx); }}
+                          onFocus=${function () { return setActive(idx); }}
+                          onMouseLeave=${function () { return setActive(idx); }}
+                        >
+                          <div className="role">${x.role}</div>
+                          <div className="meta">${x.meta}</div>
+                          ${x.link ? html`<div className="meta"><a href=${x.link} target="_blank" rel="noreferrer">Link</a></div>` : null}
+                          ${idx === active && x.details && x.details.length ? html`<ul>${x.details.map(function (d) { return html`<li key=${d}>${d}</li>`; })}</ul>` : null}
+                        </div>
+                      `;
+                    })}
+                  </div>
+                </section>
+
+                <section id="projects" className="reveal" data-reveal style=${{ marginTop: 16 }}>
+                  <h2>Projects</h2>
+                  ${data.projects.map(function (p) {
+                    return html`
+                      <div className="item" key=${p.name}>
+                        <div className="role">${p.name}</div>
+                        <div className="meta">${p.meta}</div>
+                      </div>
+                    `;
+                  })}
+                </section>
+              </div>
+
+              <div>
+                <section id="education" className="reveal" data-reveal>
+                  <h2>Education</h2>
+                  ${data.education.map(function (e) {
+                    return html`
+                      <div className="item" key=${e.name}>
+                        <div className="role">${e.name}</div>
+                        <div className="meta">${e.meta}</div>
+                        <div className="meta">${e.extra}</div>
+                      </div>
+                    `;
+                  })}
+                </section>
+
+                <section id="awards" className="reveal" data-reveal style=${{ marginTop: 16 }}>
+                  <h2>Awards</h2>
+                  ${data.awards.map(function (a) {
+                    return html`
+                      <div className="item" key=${a.name}>
+                        <div className="role">${a.name}</div>
+                        <div className="meta">${a.meta}</div>
+                      </div>
+                    `;
+                  })}
+                </section>
+
+                <section id="scores" className="reveal" data-reveal style=${{ marginTop: 16 }}>
+                  <h2>Test Scores</h2>
+                  ${data.scores.map(function (s) {
+                    return html`
+                      <div className="item" key=${s.name}>
+                        <div className="role">${s.name}</div>
+                        <div className="meta">${s.meta}</div>
+                      </div>
+                    `;
+                  })}
+                </section>
+
+                <section id="contact" className="reveal" data-reveal style=${{ marginTop: 16 }}>
+                  <h2>Contact</h2>
+                  <div className="item"><a href=${data.contact.linkedin} target="_blank" rel="noreferrer">LinkedIn</a></div>
+                  <div className="toolbar">
+                    ${html`<${CopyEmail} email=${data.contact.email} />`}
+                  </div>
+                </section>
+
+                <div className="footer">Send skills + full projects + contact links any time and I’ll refine it.</div>
+              </div>
+            </div>
+
+            <section id="blog" className="reveal" data-reveal style=${{ marginTop: 18 }}>
+              <h2>Blog</h2>
+              <div className="blog-list">
+                ${data.blogs.map(function (b, i) {
+                  return html`
+                    <details className="blog-card" key=${b.title}>
+                      <summary>
+                        <div className="blog-title">${b.title}</div>
+                        <div className="blog-meta">${b.date} · ${b.summary}</div>
+                        <div className="blog-tags">
+                          ${b.tags.map(function (t) { return html`<span key=${t} className="tag">${t}</span>`; })}
+                        </div>
+                      </summary>
+                      <div className="blog-body">
+                        ${b.body.map(function (p, idx) { return html`<p key=${`${i}-${idx}`}>${p}</p>`; })}
+                      </div>
+                    </details>
+                  `;
+                })}
+              </div>
+            </section>
           </div>
+        `;
+      }
 
-          <div className=${`mobile-menu ${menuOpen ? 'open' : ''}`} onClick=${() => setMenuOpen(false)}>
-            <div className="mobile-panel" onClick=${(e) => e.stopPropagation()}>
-              ${navItems.map(item => html`<a key=${item.id} href=${`#${item.id}`} onClick=${(e) => { e.preventDefault(); scrollTo(item.id); }}>${item.label}</a>`)}
-              ${html`<${ThemeToggle} />`}
-            </div>
-          </div>
-
-          <div className="hero reveal" data-reveal>
-            <div className="eyebrow">Portfolio</div>
-            <h1>${data.name}</h1>
-            <div className="subtitle">${data.title}</div>
-            <div className="meta-line">
-              <span>${data.location}</span>
-              <span>Interests: ${data.interests}</span>
-            </div>
-            <div className="meta-line">
-              ${data.badges.map(b => html`<span key=${b} className="pill">${b}</span>`)}
-            </div>
-            <div className="toolbar">
-              ${html`<${ThemeToggle} />`}
-            </div>
-          </div>
-
-          <div className="grid">
-            <div>
-              <section id="about" className="reveal" data-reveal>
-                <h2>About</h2>
-                <p>${data.about}</p>
-              </section>
-
-              <section id="experience" className="reveal" data-reveal style=${{ marginTop: 16 }}>
-                <h2>Experience</h2>
-                <div className="timeline">
-                  ${data.experience.map((x, idx) => html`
-                    <div
-                      key=${x.role}
-                      className=${`item ${idx === active ? 'active' : ''}`}
-                      onMouseEnter=${() => setActive(idx)}
-                      onFocus=${() => setActive(idx)}
-                      onMouseLeave=${() => setActive(idx)}
-                    >
-                      <div className="role">${x.role}</div>
-                      <div className="meta">${x.meta}</div>
-                      ${x.link ? html`<div className="meta"><a href=${x.link} target="_blank" rel="noreferrer">Link</a></div>` : null}
-                      ${idx === active && x.details?.length ? html`<ul>${x.details.map(d => html`<li key=${d}>${d}</li>`)}</ul>` : null}
-                    </div>
-                  `)}
-                </div>
-              </section>
-
-              <section id="projects" className="reveal" data-reveal style=${{ marginTop: 16 }}>
-                <h2>Projects</h2>
-                ${data.projects.map(p => html`
-                  <div className="item" key=${p.name}>
-                    <div className="role">${p.name}</div>
-                    <div className="meta">${p.meta}</div>
-                  </div>
-                `)}
-              </section>
-            </div>
-
-            <div>
-              <section id="education" className="reveal" data-reveal>
-                <h2>Education</h2>
-                ${data.education.map(e => html`
-                  <div className="item" key=${e.name}>
-                    <div className="role">${e.name}</div>
-                    <div className="meta">${e.meta}</div>
-                    <div className="meta">${e.extra}</div>
-                  </div>
-                `)}
-              </section>
-
-              <section id="awards" className="reveal" data-reveal style=${{ marginTop: 16 }}>
-                <h2>Awards</h2>
-                ${data.awards.map(a => html`
-                  <div className="item" key=${a.name}>
-                    <div className="role">${a.name}</div>
-                    <div className="meta">${a.meta}</div>
-                  </div>
-                `)}
-              </section>
-
-              <section id="scores" className="reveal" data-reveal style=${{ marginTop: 16 }}>
-                <h2>Test Scores</h2>
-                ${data.scores.map(s => html`
-                  <div className="item" key=${s.name}>
-                    <div className="role">${s.name}</div>
-                    <div className="meta">${s.meta}</div>
-                  </div>
-                `)}
-              </section>
-
-              <section id="contact" className="reveal" data-reveal style=${{ marginTop: 16 }}>
-                <h2>Contact</h2>
-                <div className="item"><a href=${data.contact.linkedin} target="_blank" rel="noreferrer">LinkedIn</a></div>
-                <div className="toolbar">
-                  ${html`<${CopyEmail} email=${data.contact.email} />`}
-                </div>
-              </section>
-
-              <div className="footer">Send skills + full projects + contact links any time and I’ll refine it.</div>
-            </div>
-          </div>
-
-          <section id="blog" className="reveal" data-reveal style=${{ marginTop: 18 }}>
-            <h2>Blog</h2>
-            <div className="blog-list">
-              ${data.blogs.map((b, i) => html`
-                <details className="blog-card" key=${b.title}>
-                  <summary>
-                    <div className="blog-title">${b.title}</div>
-                    <div className="blog-meta">${b.date} · ${b.summary}</div>
-                    <div className="blog-tags">
-                      ${b.tags.map(t => html`<span key=${t} className="tag">${t}</span>`)}
-                    </div>
-                  </summary>
-                  <div className="blog-body">
-                    ${b.body.map((p, idx) => html`<p key=${`${i}-${idx}`}>${p}</p>`)}
-                  </div>
-                </details>
-              `)}
-            </div>
-          </section>
-        </div>
-      `;
+      ReactDOM.createRoot(document.getElementById('root')).render(html`<${App} />`);
     }
 
-    ReactDOM.createRoot(document.getElementById('root')).render(html`<${App} />`);
+    loadHtm(start);
+  })();
   </script>
 </body>
 </html>
