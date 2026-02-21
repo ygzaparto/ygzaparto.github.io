@@ -150,9 +150,8 @@
       width: fit-content;
     }
 
-    .menu-close { justify-self: end; }
-
     .btn:hover { border-color: var(--accent); color: var(--ink); }
+    .menu-close { justify-self: end; }
 
     .blog-list { display: grid; gap: 14px; margin-top: 18px; }
     .blog-card {
@@ -182,178 +181,129 @@
   </style>
 </head>
 <body>
-  <div id="root"></div>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">Yash Gupta</div>
+      <nav class="nav-links">
+        <a href="index.html#about">About Me</a>
+        <a href="blog.html">Blog</a>
+      </nav>
+      <button id="menu-open" class="menu-btn">Menu ☰</button>
+    </div>
 
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script>
-    (function () {
-      function loadHtm(cb) {
-        if (window.htm) return cb();
-        var s = document.createElement('script');
-        s.src = 'https://unpkg.com/htm@3.1.1/dist/htm.umd.js';
-        s.onload = cb;
-        document.head.appendChild(s);
-      }
+    <div id="mobile-menu" class="mobile-menu">
+      <div class="mobile-panel">
+        <button id="menu-close" class="btn menu-close">Close ✕</button>
+        <a href="index.html#about">About Me</a>
+        <a href="blog.html">Blog</a>
+      </div>
+    </div>
 
-      function start() {
-        var React = window.React;
-        var ReactDOM = window.ReactDOM;
-        var html = window.htm.bind(React.createElement);
-        var useEffect = React.useEffect;
-        var useState = React.useState;
+    <div class="hero">
+      <div class="eyebrow">Writing</div>
+      <h1>Blog</h1>
+      <div class="subtitle">Notes on AI, philosophy, and the personal AI stack.</div>
+      <div class="toolbar">
+        <button id="theme-toggle" class="btn">Dark mode</button>
+      </div>
+    </div>
 
-        var blogs = [
-          {
-            title: "The Quiet Discipline of Small Promises",
-            date: "Feb 2026",
-            summary: "Why keeping tiny commitments changes your identity.",
-            tags: ["Life Philosophy", "Self‑Help"],
-            body: [
-              "Most of life improvement advice fails because it asks for a personality rewrite. A better path is smaller: make a promise you can keep, then keep it — daily.",
-              "From self‑improvement communities lately, the recurring theme isn’t a lack of information; it’s a lack of traction. People know what to do, but struggle to keep momentum when life gets messy.",
-              "The antidote is a ‘minimum reliable action’ — a version of your habit so small it survives stress: two pushups, five minutes of reading, one paragraph of journaling.",
-              "What changes isn’t the action itself, but the identity signal. Each kept promise is a vote: I am the kind of person who follows through.",
-              "Over time, the minimum rises naturally. The habit grows not by force, but by evidence. You stop negotiating with yourself because you’ve built trust.",
-              "Philosophy calls this integrity; psychology calls it self‑efficacy. Either way, it’s the same practice: align your words with your actions, even when the action is small.",
-              "Today’s exercise: pick one small promise you can keep in under five minutes. Do it every day for two weeks. Then decide what to grow.",
-            ],
-          },
-          {
-            title: "AI in 2026: The Stack Has Shifted",
-            date: "Feb 2026",
-            summary: "Models are table stakes; systems are the moat.",
-            tags: ["AI Trends", "Systems", "Production"],
-            body: [
-              "The model is no longer the product. The product is the system: retrieval, tool use, evaluation, and monitoring working together under strict latency and cost constraints.",
-              "Teams that win treat prompts and tools like software artifacts — versioned, tested, and instrumented — and they route tasks across a portfolio of models rather than betting on a single one.",
-              "The new differentiator is feedback. Data flywheels, human review, and automated evals turn good demos into reliable systems.",
-              "We’re seeing a shift toward thinner model layers and thicker orchestration layers: caching, routing, agent policies, and observability.",
-              "Infrastructure is the advantage, and operational rigor is what scales AI beyond novelty.",
-            ],
-          },
-          {
-            title: "Agents Need Constraints, Not Magic",
-            date: "Feb 2026",
-            summary: "Durability comes from guardrails and verification.",
-            tags: ["Agents", "Safety", "Product"],
-            body: [
-              "Great agents look less like free‑form chat and more like constrained workflows. The secret is making actions explicit, reversible, and observable.",
-              "Permissions should be scoped, tool contracts should be clear, and every critical step should have a verification layer — automatic or human‑in‑the‑loop.",
-              "This approach feels slower at first, but it prevents silent failures, reduces risk, and builds user trust over time.",
-              "The best teams design for failure early: fallback plans, safe defaults, and metrics that make errors visible.",
-              "The future is not “hands‑off AI” — it’s “hands‑on leverage.”",
-            ],
-          },
-          {
-            title: "OpenClaw & the Personal AI Stack",
-            date: "Feb 2026",
-            summary: "Local‑first assistants and owned context.",
-            tags: ["OpenClaw", "Future", "Privacy"],
-            body: [
-              "Recent OpenClaw work points to a future where assistants run close to your data and integrate services without handing control to a single cloud vendor.",
-              "Local workflows, configurable tool gateways, and granular permissions make the assistant powerful but contained.",
-              "Pairing local context with selective cloud compute gives you speed, privacy, and flexibility — without sacrificing capability.",
-              "The endgame is a personal AI operating layer: secure, composable, and tuned to how you work.",
-              "That’s the path to assistants that feel less like chatbots and more like real infrastructure.",
-            ],
-          },
-        ];
-
-        var navItems = [
-          { label: 'About Me', href: 'index.html#about' },
-          { label: 'Blog', href: 'blog.html' },
-        ];
-
-        function ThemeToggle() {
-          var _a = useState(function () { return localStorage.getItem('theme') || 'light'; }),
-            theme = _a[0],
-            setTheme = _a[1];
-
-          useEffect(function () {
-            document.documentElement.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
-            localStorage.setItem('theme', theme);
-          }, [theme]);
-
-          return html`<button className="btn" onClick=${function () { return setTheme(function (t) { return (t === 'dark' ? 'light' : 'dark'); }); }}>
-            ${theme === 'dark' ? 'Light mode' : 'Dark mode'}
-          </button>`;
-        }
-
-        function App() {
-          var _a = useState(false), menuOpen = _a[0], setMenuOpen = _a[1];
-
-          useEffect(function () {
-            var container = document.getElementById('comments-container');
-            if (!container || container.childElementCount) return;
-            var s = document.createElement('script');
-            s.src = 'https://utteranc.es/client.js';
-            s.async = true;
-            s.setAttribute('repo', 'ygzaparto/ygzaparto.github.io');
-            s.setAttribute('issue-term', 'pathname');
-            s.setAttribute('theme', 'github-light');
-            s.setAttribute('crossorigin', 'anonymous');
-            container.appendChild(s);
-          }, []);
-
-          return html`
-            <div className="wrap">
-              <div className="topbar">
-                <div className="brand">Yash Gupta</div>
-                <nav className="nav-links">
-                  ${navItems.map(function (item) { return html`<a key=${item.label} href=${item.href}>${item.label}</a>`; })}
-                </nav>
-                <button className="menu-btn" onClick=${function () { return setMenuOpen(true); }}>Menu ☰</button>
-              </div>
-
-              <div className=${`mobile-menu ${menuOpen ? 'open' : ''}`} onClick=${function () { return setMenuOpen(false); }}>
-                <div className="mobile-panel" onClick=${function (e) { return e.stopPropagation(); }}>
-                  <button className="btn menu-close" onClick=${function () { return setMenuOpen(false); }}>Close ✕</button>
-                  ${navItems.map(function (item) { return html`<a key=${item.label} href=${item.href}>${item.label}</a>`; })}
-                </div>
-              </div>
-
-              <div className="hero">
-                <div className="eyebrow">Writing</div>
-                <h1>Blog</h1>
-                <div className="subtitle">Notes on AI, agents, and the personal AI stack.</div>
-                <div className="toolbar">${html`<${ThemeToggle} />`}</div>
-              </div>
-
-              <section id="blog">
-                <div className="blog-list">
-                  ${blogs.map(function (b, i) {
-                    return html`
-                      <details className="blog-card" key=${b.title}>
-                        <summary>
-                          <div className="blog-title">${b.title}</div>
-                          <div className="blog-meta">${b.date} · ${b.summary}</div>
-                          <div className="blog-tags">
-                            ${b.tags.map(function (t) { return html`<span key=${t} className="tag">${t}</span>`; })}
-                          </div>
-                        </summary>
-                        <div className="blog-body">
-                          ${b.body.map(function (p, idx) { return html`<p key=${`${i}-${idx}`}>${p}</p>`; })}
-                        </div>
-                      </details>
-                    `;
-                  })}
-                </div>
-              </section>
-
-              <section id="comments" style="margin-top:18px;">
-                <h2>Comments</h2>
-                <div id="comments-container"></div>
-              </section>
+    <section id="blog">
+      <div class="blog-list">
+        <details class="blog-card" open>
+          <summary>
+            <div class="blog-title">The Quiet Discipline of Small Promises</div>
+            <div class="blog-meta">Feb 2026 · Why keeping tiny commitments changes your identity.</div>
+            <div class="blog-tags">
+              <span class="tag">Life Philosophy</span>
+              <span class="tag">Self‑Help</span>
             </div>
-          `;
-        }
+          </summary>
+          <div class="blog-body">
+            <p>Most self‑help fails because it asks for a personality rewrite. The quieter alternative is smaller: make a promise you can keep, then keep it — daily.</p>
+            <p>Across self‑improvement communities, the recurring theme isn’t a lack of information; it’s a lack of traction. People know what to do but can’t keep momentum when life gets messy.</p>
+            <p>The antidote is a minimum reliable action — a version of your habit so small it survives stress: two pushups, five minutes of reading, one paragraph of journaling.</p>
+            <p>What changes isn’t the action itself, but the identity signal. Each kept promise is a vote: I am the kind of person who follows through.</p>
+            <p>Over time, the minimum rises naturally. The habit grows not by force, but by evidence. You stop negotiating with yourself because you’ve built trust.</p>
+            <p>Philosophy calls this integrity; psychology calls it self‑efficacy. Either way, it’s the same practice: align your words with your actions, even when the action is small.</p>
+            <p>Today’s exercise: pick one small promise you can keep in under five minutes. Do it every day for two weeks. Then decide what to grow.</p>
+          </div>
+        </details>
 
-        ReactDOM.createRoot(document.getElementById('root')).render(html`<${App} />`);
-      }
+        <details class="blog-card">
+          <summary>
+            <div class="blog-title">AI in 2026: The Stack Has Shifted</div>
+            <div class="blog-meta">Feb 2026 · Models are table stakes; systems are the moat.</div>
+            <div class="blog-tags">
+              <span class="tag">AI Trends</span>
+              <span class="tag">Systems</span>
+              <span class="tag">Production</span>
+            </div>
+          </summary>
+          <div class="blog-body">
+            <p>The model is no longer the product. The product is the system: retrieval, tool use, evaluation, and monitoring working together under tight latency and cost constraints.</p>
+            <p>Winning teams treat prompts and tools like software artifacts — versioned, tested, and instrumented — and route tasks across a portfolio of models rather than betting on a single one.</p>
+            <p>The new differentiator is feedback. Data flywheels, human review, and automated evals turn good demos into reliable systems.</p>
+            <p>We’re seeing thinner model layers and thicker orchestration layers: caching, routing, agent policies, and observability.</p>
+            <p>Infrastructure is the advantage, and operational rigor is what scales AI beyond novelty.</p>
+          </div>
+        </details>
 
-      loadHtm(start);
-    })();
+        <details class="blog-card">
+          <summary>
+            <div class="blog-title">OpenClaw & the Personal AI Stack</div>
+            <div class="blog-meta">Feb 2026 · Local‑first assistants and owned context.</div>
+            <div class="blog-tags">
+              <span class="tag">OpenClaw</span>
+              <span class="tag">Future</span>
+              <span class="tag">Privacy</span>
+            </div>
+          </summary>
+          <div class="blog-body">
+            <p>Recent OpenClaw work points to a future where assistants run close to your data and integrate services without handing control to a single cloud vendor.</p>
+            <p>Local workflows, configurable tool gateways, and granular permissions make the assistant powerful but contained.</p>
+            <p>Pairing local context with selective cloud compute gives you speed, privacy, and flexibility — without sacrificing capability.</p>
+            <p>The endgame is a personal AI operating layer: secure, composable, and tuned to how you work.</p>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section id="comments" style="margin-top:18px;">
+      <h2>Comments</h2>
+      <div id="comments-container"></div>
+    </section>
+  </div>
+
+  <script>
+    // theme toggle
+    const toggle = document.getElementById('theme-toggle');
+    const setTheme = (t) => {
+      document.documentElement.setAttribute('data-theme', t);
+      localStorage.setItem('theme', t);
+      toggle.textContent = t === 'dark' ? 'Light mode' : 'Dark mode';
+    };
+    setTheme(localStorage.getItem('theme') || 'light');
+    toggle.addEventListener('click', () => setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
+
+    // mobile menu
+    const menu = document.getElementById('mobile-menu');
+    document.getElementById('menu-open').addEventListener('click', () => menu.classList.add('open'));
+    document.getElementById('menu-close').addEventListener('click', () => menu.classList.remove('open'));
+    menu.addEventListener('click', (e) => { if (e.target === menu) menu.classList.remove('open'); });
+
+    // comments (Utterances)
+    const container = document.getElementById('comments-container');
+    if (container) {
+      const s = document.createElement('script');
+      s.src = 'https://utteranc.es/client.js';
+      s.async = true;
+      s.setAttribute('repo', 'ygzaparto/ygzaparto.github.io');
+      s.setAttribute('issue-term', 'pathname');
+      s.setAttribute('theme', 'github-light');
+      s.setAttribute('crossorigin', 'anonymous');
+      container.appendChild(s);
+    }
   </script>
 </body>
 </html>
