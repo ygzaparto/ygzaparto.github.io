@@ -141,6 +141,7 @@
     .subtitle { color: var(--muted); font-size: 1.05rem; }
 
     .toolbar { display: flex; gap: 10px; align-items: center; margin-top: 6px; }
+    .category-toolbar { flex-wrap: wrap; }
 
     .btn {
       border: 1px solid var(--border);
@@ -154,9 +155,20 @@
     }
 
     .btn:hover { border-color: var(--accent); color: var(--ink); }
+    .category-btn.is-active {
+      border-color: var(--accent);
+      color: var(--ink);
+      background: rgba(122,162,255,0.12);
+    }
     .menu-close { justify-self: end; }
 
     .blog-list { display: grid; gap: 14px; margin-top: 18px; }
+    .no-blogs {
+      display: none;
+      margin: 24px 0;
+      color: var(--muted);
+      text-align: center;
+    }
     .blog-card {
       border: 1px solid var(--border);
       border-radius: 14px;
@@ -209,11 +221,19 @@
       <div class="toolbar">
         <button id="theme-toggle" class="btn">Dark mode</button>
       </div>
+      <div class="toolbar category-toolbar">
+        <button class="btn category-btn" data-category="All">All</button>
+        <button class="btn category-btn" data-category="Tech/AI">Tech/AI</button>
+        <button class="btn category-btn" data-category="Life Philosophy & Self-Help">Life Philosophy & Self-Help</button>
+        <button class="btn category-btn" data-category="Fitness">Fitness</button>
+        <button class="btn category-btn" data-category="Personal Finance">Personal Finance</button>
+      </div>
     </div>
 
     <section id="blog">
+      <div id="no-blogs-message" class="no-blogs">No blogs available for this category.</div>
       <div class="blog-list">
-        <details class="blog-card" open>
+        <details class="blog-card" data-categories="Life Philosophy & Self-Help" open>
           <summary>
             <div class="blog-title">The Quiet Discipline of Small Promises</div>
             <div class="blog-meta">Feb 2026 · Why keeping tiny commitments changes your identity.</div>
@@ -233,7 +253,7 @@
           </div>
         </details>
 
-        <details class="blog-card">
+        <details class="blog-card" data-categories="Tech/AI">
           <summary>
             <div class="blog-title">AI in 2026: The Stack Has Shifted</div>
             <div class="blog-meta">Feb 2026 · Models are table stakes; systems are the moat.</div>
@@ -252,7 +272,7 @@
           </div>
         </details>
 
-        <details class="blog-card">
+        <details class="blog-card" data-categories="Tech/AI">
           <summary>
             <div class="blog-title">OpenClaw & the Personal AI Stack</div>
             <div class="blog-meta">Feb 2026 · Local‑first assistants and owned context.</div>
@@ -294,6 +314,30 @@
     document.getElementById('menu-open').addEventListener('click', () => menu.classList.add('open'));
     document.getElementById('menu-close').addEventListener('click', () => menu.classList.remove('open'));
     menu.addEventListener('click', (e) => { if (e.target === menu) menu.classList.remove('open'); });
+
+    // category filtering
+    const categoryButtons = document.querySelectorAll('.category-btn');
+    const blogCards = document.querySelectorAll('.blog-card');
+    const noBlogsMessage = document.getElementById('no-blogs-message');
+
+    const applyFilter = (category) => {
+      let visibleCount = 0;
+      categoryButtons.forEach(btn => btn.classList.toggle('is-active', btn.dataset.category === category));
+      blogCards.forEach(card => {
+        const categories = (card.dataset.categories || '').split('|').map(c => c.trim());
+        const show = (category === 'All') || categories.includes(category);
+        card.style.display = show ? '' : 'none';
+        if (show) visibleCount++;
+      });
+      if (noBlogsMessage) {
+        noBlogsMessage.style.display = visibleCount === 0 ? 'block' : 'none';
+      }
+    };
+
+    if (categoryButtons.length) {
+      categoryButtons.forEach(btn => btn.addEventListener('click', () => applyFilter(btn.dataset.category)));
+      applyFilter('All');
+    }
 
     // comments (Utterances)
     const container = document.getElementById('comments-container');
