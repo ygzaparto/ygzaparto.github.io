@@ -187,7 +187,12 @@
 
     <div class="comments">
       <h2>Comments</h2>
-      <div id="comments"></div>
+      <div id="cusdis_thread"
+        data-host="https://cusdis.com"
+        data-app-id="YOUR_CUSDIS_APP_ID"
+        data-page-id="quiet-discipline"
+        data-page-url="https://ygzaparto.github.io/blog/quiet-discipline/"
+        data-page-title="The Quiet Discipline of Small Promises"></div>
     </div>
   </div>
 
@@ -206,17 +211,7 @@
     document.getElementById('menu-open').addEventListener('click', () => menu.classList.add('open'));
     document.getElementById('menu-close').addEventListener('click', () => menu.classList.remove('open'));
     menu.addEventListener('click', (e) => { if (e.target === menu) menu.classList.remove('open'); });
-
-    // Disqus placeholder – set DISQUS_SHORTNAME to enable guest comments
-    const DISQUS_SHORTNAME = '';
-    if (DISQUS_SHORTNAME) {
-      var d = document, s = d.createElement('script');
-      s.src = 'https://' + DISQUS_SHORTNAME + '.disqus.com/embed.js';
-      s.setAttribute('data-timestamp', +new Date());
-      (d.head || d.body).appendChild(s);
-    } else {
-      document.getElementById('comments').innerHTML = '<div class="meta">Comments are enabled for guests via Disqus. Add your Disqus shortname to activate.</div>';
-    }
   </script>
+  <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
 </body>
 </html>
