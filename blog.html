@@ -205,6 +205,21 @@
 
         var blogs = [
           {
+            title: "The Quiet Discipline of Small Promises",
+            date: "Feb 2026",
+            summary: "Why keeping tiny commitments changes your identity.",
+            tags: ["Life Philosophy", "Self‑Help"],
+            body: [
+              "Most of life improvement advice fails because it asks for a personality rewrite. A better path is smaller: make a promise you can keep, then keep it — daily.",
+              "From self‑improvement communities lately, the recurring theme isn’t a lack of information; it’s a lack of traction. People know what to do, but struggle to keep momentum when life gets messy.",
+              "The antidote is a ‘minimum reliable action’ — a version of your habit so small it survives stress: two pushups, five minutes of reading, one paragraph of journaling.",
+              "What changes isn’t the action itself, but the identity signal. Each kept promise is a vote: I am the kind of person who follows through.",
+              "Over time, the minimum rises naturally. The habit grows not by force, but by evidence. You stop negotiating with yourself because you’ve built trust.",
+              "Philosophy calls this integrity; psychology calls it self‑efficacy. Either way, it’s the same practice: align your words with your actions, even when the action is small.",
+              "Today’s exercise: pick one small promise you can keep in under five minutes. Do it every day for two weeks. Then decide what to grow.",
+            ],
+          },
+          {
             title: "AI in 2026: The Stack Has Shifted",
             date: "Feb 2026",
             summary: "Models are table stakes; systems are the moat.",
@@ -268,6 +283,19 @@
         function App() {
           var _a = useState(false), menuOpen = _a[0], setMenuOpen = _a[1];
 
+          useEffect(function () {
+            var container = document.getElementById('comments-container');
+            if (!container || container.childElementCount) return;
+            var s = document.createElement('script');
+            s.src = 'https://utteranc.es/client.js';
+            s.async = true;
+            s.setAttribute('repo', 'ygzaparto/ygzaparto.github.io');
+            s.setAttribute('issue-term', 'pathname');
+            s.setAttribute('theme', 'github-light');
+            s.setAttribute('crossorigin', 'anonymous');
+            container.appendChild(s);
+          }, []);
+
           return html`
             <div className="wrap">
               <div className="topbar">
@@ -311,6 +339,11 @@
                     `;
                   })}
                 </div>
+              </section>
+
+              <section id="comments" style="margin-top:18px;">
+                <h2>Comments</h2>
+                <div id="comments-container"></div>
               </section>
             </div>
           `;
