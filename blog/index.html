@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yash Gupta — Blog</title>
+  <style>
+
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fraunces:wght@500;600;700&display=swap');
+
+    :root {
+      --bg: #f6f4f1;
+      --card: #ffffff;
+      --ink: #111111;
+      --muted: #5f5f5f;
+      --border: #e7e3dc;
+      --accent: #2f6fed;
+      --shadow: 0 12px 40px rgba(17, 17, 17, 0.10);
+    }
+
+    [data-theme="dark"] {
+      --bg: #0f1113;
+      --card: #16191d;
+      --ink: #f4f4f2;
+      --muted: #a0a6ad;
+      --border: #2a2f36;
+      --accent: #7aa2ff;
+      --shadow: 0 12px 40px rgba(0,0,0,0.45);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(255,255,255,0.9) 0%, transparent 50%),
+        radial-gradient(1000px 800px at 120% 10%, rgba(120,160,255,0.18) 0%, transparent 45%),
+        var(--bg);
+      color: var(--ink);
+      line-height: 1.55;
+      transition: background 0.6s ease, color 0.4s ease;
+    }
+
+    .wrap { max-width: 1040px; margin: 64px auto 96px; padding: 0 24px; }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .brand { font-weight: 600; letter-spacing: 0.01em; }
+
+    .nav-links { display: flex; gap: 16px; font-size: 0.9rem; }
+    .nav-links a { border: none; color: var(--muted); text-decoration: none; }
+    .nav-links a:hover { color: var(--ink); }
+
+    .menu-btn {
+      display: none;
+      border: 1px solid var(--border);
+      background: transparent;
+      padding: 6px 10px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .mobile-menu {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+      display: flex;
+      justify-content: flex-end;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+      z-index: 20;
+    }
+
+    .mobile-menu.open { opacity: 1; pointer-events: auto; }
+
+    .mobile-panel {
+      width: min(78%, 320px);
+      height: auto;
+      max-height: 70vh;
+      margin: 16px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: var(--shadow);
+      display: grid;
+      gap: 10px;
+      align-content: start;
+      justify-items: start;
+    }
+
+    .mobile-panel a { border: none; color: var(--ink); text-decoration: none; }
+
+    @media (max-width: 780px) {
+      .nav-links { display: none; }
+      .menu-btn { display: inline-flex; align-items: center; gap: 6px; }
+    }
+
+    .hero {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      display: grid;
+      gap: 10px;
+    }
+
+    .eyebrow {
+      font-size: 0.85rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .eyebrow::before { content: ""; width: 10px; height: 10px; border-radius: 999px; background: var(--accent); }
+
+    h1 { font-family: Fraunces, ui-serif, Georgia, serif; font-size: clamp(2.4rem, 4vw, 3.4rem); margin: 0; }
+
+    .subtitle { color: var(--muted); font-size: 1.05rem; }
+
+    .toolbar { display: flex; gap: 10px; align-items: center; margin-top: 6px; }
+
+    .btn {
+      border: 1px solid var(--border);
+      background: transparent;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      color: var(--muted);
+      cursor: pointer;
+      width: fit-content;
+    }
+
+    .btn:hover { border-color: var(--accent); color: var(--ink); }
+    .menu-close { justify-self: end; }
+
+    .blog-list { display: grid; gap: 14px; margin-top: 18px; }
+    .blog-card { border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; background: rgba(255,255,255,0.7); transition: box-shadow 0.3s ease, transform 0.3s ease; }
+    [data-theme="dark"] .blog-card { background: rgba(22,25,29,0.9); }
+    .blog-card:hover { box-shadow: var(--shadow); transform: translateY(-1px); }
+    .blog-title { font-weight: 600; }
+    .blog-meta { color: var(--muted); font-size: 0.9rem; margin-top: 2px; }
+    .blog-tags { margin-top: 6px; display: flex; gap: 6px; flex-wrap: wrap; }
+    .tag { border: 1px solid var(--border); border-radius: 999px; padding: 3px 8px; font-size: 0.75rem; color: var(--muted); background: rgba(250,249,247,0.7); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">Yash Gupta</div>
+      <nav class="nav-links">
+        <a href="/index.html#about">About Me</a>
+        <a href="/blog/">Blog</a>
+      </nav>
+      <button id="menu-open" class="menu-btn">Menu ☰</button>
+    </div>
+
+    <div id="mobile-menu" class="mobile-menu">
+      <div class="mobile-panel">
+        <button id="menu-close" class="btn menu-close">Close ✕</button>
+        <a href="/index.html#about">About Me</a>
+        <a href="/blog/">Blog</a>
+        <button id="theme-toggle" class="btn">Dark mode</button>
+      </div>
+    </div>
+
+    <div class="hero">
+      <div class="eyebrow">Writing</div>
+      <h1>Blog</h1>
+      <div class="subtitle">Notes on AI, philosophy, and the personal AI stack.</div>
+      <div class="toolbar">
+        <button id="theme-toggle-hero" class="btn">Dark mode</button>
+      </div>
+    </div>
+
+    <section id="blog">
+      <div class="blog-list">
+        <a class="blog-card" href="/blog/quiet-discipline/">
+          <div class="blog-title">The Quiet Discipline of Small Promises</div>
+          <div class="blog-meta">Feb 2026 · Why keeping tiny commitments changes your identity.</div>
+          <div class="blog-tags"><span class="tag">Life Philosophy</span><span class="tag">Self‑Help</span></div>
+        </a>
+        <a class="blog-card" href="/blog/ai-2026-stack/">
+          <div class="blog-title">AI in 2026: The Stack Has Shifted</div>
+          <div class="blog-meta">Feb 2026 · Models are table stakes; systems are the moat.</div>
+          <div class="blog-tags"><span class="tag">AI Trends</span><span class="tag">Systems</span><span class="tag">Production</span></div>
+        </a>
+        <a class="blog-card" href="/blog/openclaw-personal-ai/">
+          <div class="blog-title">OpenClaw & the Personal AI Stack</div>
+          <div class="blog-meta">Feb 2026 · Local‑first assistants and owned context.</div>
+          <div class="blog-tags"><span class="tag">OpenClaw</span><span class="tag">Future</span><span class="tag">Privacy</span></div>
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const setTheme = (t) => {
+      document.documentElement.setAttribute('data-theme', t);
+      localStorage.setItem('theme', t);
+      document.querySelectorAll('#theme-toggle,#theme-toggle-hero').forEach(btn => {
+        if (btn) btn.textContent = t === 'dark' ? 'Light mode' : 'Dark mode';
+      });
+    };
+    setTheme(localStorage.getItem('theme') || 'light');
+    document.querySelectorAll('#theme-toggle,#theme-toggle-hero').forEach(btn => {
+      btn && btn.addEventListener('click', () => setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
+    });
+
+    const menu = document.getElementById('mobile-menu');
+    document.getElementById('menu-open').addEventListener('click', () => menu.classList.add('open'));
+    document.getElementById('menu-close').addEventListener('click', () => menu.classList.remove('open'));
+    menu.addEventListener('click', (e) => { if (e.target === menu) menu.classList.remove('open'); });
+  </script>
+</body>
+</html>

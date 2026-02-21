@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Yash Gupta — Portfolio</title>
   <style>
+
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fraunces:wght@500;600;700&display=swap');
 
     :root {
@@ -41,11 +42,7 @@
       transition: background 0.6s ease, color 0.4s ease;
     }
 
-    .wrap {
-      max-width: 1040px;
-      margin: 64px auto 96px;
-      padding: 0 24px;
-    }
+    .wrap { max-width: 1040px; margin: 64px auto 96px; padding: 0 24px; }
 
     .topbar {
       display: flex;
@@ -55,18 +52,10 @@
       margin-bottom: 16px;
     }
 
-    .brand {
-      font-weight: 600;
-      letter-spacing: 0.01em;
-    }
+    .brand { font-weight: 600; letter-spacing: 0.01em; }
 
-    .nav-links {
-      display: flex;
-      gap: 16px;
-      font-size: 0.9rem;
-    }
-
-    .nav-links a { border: none; color: var(--muted); }
+    .nav-links { display: flex; gap: 16px; font-size: 0.9rem; }
+    .nav-links a { border: none; color: var(--muted); text-decoration: none; }
     .nav-links a:hover { color: var(--ink); }
 
     .menu-btn {
@@ -96,18 +85,21 @@
 
     .mobile-panel {
       width: min(78%, 320px);
-      height: 100%;
+      height: auto;
+      max-height: 70vh;
+      margin: 16px;
       background: var(--card);
-      border-left: 1px solid var(--border);
-      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
       box-shadow: var(--shadow);
       display: grid;
-      gap: 12px;
+      gap: 10px;
       align-content: start;
       justify-items: start;
     }
 
-    .mobile-panel a { border: none; color: var(--ink); }
+    .mobile-panel a { border: none; color: var(--ink); text-decoration: none; }
 
     @media (max-width: 780px) {
       .nav-links { display: none; }
@@ -118,23 +110,10 @@
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 20px;
-      padding: 28px 28px 30px;
+      padding: 28px;
       box-shadow: var(--shadow);
       display: grid;
-      gap: 12px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero::after {
-      content: "";
-      position: absolute;
-      inset: -40% -20% auto auto;
-      width: 260px;
-      height: 260px;
-      background: radial-gradient(circle at center, rgba(47,111,237,0.18), transparent 60%);
-      opacity: 0.7;
-      pointer-events: none;
+      gap: 10px;
     }
 
     .eyebrow {
@@ -147,127 +126,13 @@
       gap: 8px;
     }
 
-    .eyebrow::before {
-      content: "";
-      width: 10px;
-      height: 10px;
-      border-radius: 999px;
-      background: var(--accent);
-      display: inline-block;
-    }
+    .eyebrow::before { content: ""; width: 10px; height: 10px; border-radius: 999px; background: var(--accent); }
 
-    h1 {
-      font-family: Fraunces, ui-serif, Georgia, serif;
-      font-size: clamp(2.6rem, 4vw, 3.6rem);
-      margin: 0;
-      letter-spacing: -0.02em;
-    }
+    h1 { font-family: Fraunces, ui-serif, Georgia, serif; font-size: clamp(2.4rem, 4vw, 3.4rem); margin: 0; }
 
     .subtitle { color: var(--muted); font-size: 1.05rem; }
 
-    .meta-line {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px 16px;
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    .pill {
-      border: 1px solid var(--border);
-      background: rgba(250,249,247,0.8);
-      padding: 6px 10px;
-      border-radius: 999px;
-      font-size: 0.85rem;
-      color: var(--muted);
-    }
-
-    .grid {
-      display: grid;
-      gap: 18px;
-      margin-top: 22px;
-    }
-
-    @media (min-width: 900px) {
-      .grid { grid-template-columns: 2.1fr 1fr; }
-    }
-
-    section {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 18px 20px;
-      box-shadow: 0 1px 0 rgba(0,0,0,0.02);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    section:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow);
-    }
-
-    h2 {
-      font-size: 0.9rem;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin: 0 0 12px;
-    }
-
-    .item { margin-bottom: 14px; }
-    .item:last-child { margin-bottom: 0; }
-    .role { font-weight: 600; }
-    .meta { color: var(--muted); font-size: 0.95rem; }
-
-    .timeline {
-      border-left: 2px solid var(--border);
-      padding-left: 16px;
-    }
-
-    .timeline .item {
-      position: relative;
-      padding-bottom: 4px;
-    }
-
-    .timeline .item::before {
-      content: "";
-      position: absolute;
-      left: -24px;
-      top: 6px;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--border);
-      transition: background 0.2s ease, transform 0.2s ease;
-    }
-
-    .timeline .item.active::before {
-      background: var(--accent);
-      transform: scale(1.2);
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(16px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    ul { margin: 8px 0 0 20px; padding: 0; }
-
-    a { color: var(--ink); text-decoration: none; border-bottom: 1px solid #d5d1c9; }
-    a:hover { border-bottom-color: #999; }
-
-    .toolbar {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      margin-top: 6px;
-    }
+    .toolbar { display: flex; gap: 10px; align-items: center; margin-top: 6px; }
 
     .btn {
       border: 1px solid var(--border);
@@ -280,344 +145,172 @@
       width: fit-content;
     }
 
+    .btn:hover { border-color: var(--accent); color: var(--ink); }
     .menu-close { justify-self: end; }
 
-    .btn:hover { border-color: var(--accent); color: var(--ink); }
 
-    .footer {
-      margin-top: 18px;
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
+    .grid { display: grid; gap: 18px; margin-top: 22px; }
+    @media (min-width: 900px) { .grid { grid-template-columns: 2.1fr 1fr; } }
+    section { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 18px 20px; box-shadow: 0 1px 0 rgba(0,0,0,0.02); }
+    h2 { font-size: 0.9rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin: 0 0 12px; }
+    .item { margin-bottom: 14px; }
+    .item:last-child { margin-bottom: 0; }
+    .role { font-weight: 600; }
+    .meta { color: var(--muted); font-size: 0.95rem; }
+    .timeline { border-left: 2px solid var(--border); padding-left: 16px; }
+    .timeline .item { position: relative; padding-bottom: 4px; }
+    .timeline .item::before { content: ""; position: absolute; left: -24px; top: 6px; width: 8px; height: 8px; border-radius: 50%; background: var(--border); }
+    ul { margin: 8px 0 0 20px; padding: 0; }
+    a { color: var(--ink); text-decoration: none; border-bottom: 1px solid #d5d1c9; }
+    a:hover { border-bottom-color: #999; }
+    .pill { border: 1px solid var(--border); background: rgba(250,249,247,0.8); padding: 6px 10px; border-radius: 999px; font-size: 0.85rem; color: var(--muted); }
   </style>
 </head>
 <body>
-  <div id="root"></div>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">Yash Gupta</div>
+      <nav class="nav-links">
+        <a href="#about">About Me</a>
+        <a href="/blog/">Blog</a>
+      </nav>
+      <button id="menu-open" class="menu-btn">Menu ☰</button>
+    </div>
 
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/htm@3.1.1/dist/htm.umd.js"></script>
+    <div id="mobile-menu" class="mobile-menu">
+      <div class="mobile-panel">
+        <button id="menu-close" class="btn menu-close">Close ✕</button>
+        <a href="#about">About Me</a>
+        <a href="/blog/">Blog</a>
+        <button id="theme-toggle" class="btn">Dark mode</button>
+      </div>
+    </div>
 
-  <script>
-  (function () {
-    function loadHtm(cb) {
-      if (window.htm) return cb();
-      var s = document.createElement('script');
-      s.src = 'https://unpkg.com/htm@3.1.1/dist/htm.umd.js';
-      s.onload = cb;
-      document.head.appendChild(s);
-    }
+    <div class="hero">
+      <div class="eyebrow">Portfolio</div>
+      <h1>Yash Gupta</h1>
+      <div class="subtitle">Senior Software Engineer, Platform — C3 AI</div>
+      <div class="meta">Redwood City, CA · On‑site</div>
+      <div class="meta">Interests: Distributed Systems · Machine Learning</div>
+      <div class="toolbar">
+        <span class="pill">Building Agentic AI Platform</span>
+        <span class="pill">LLMs · Generative AI</span>
+      </div>
+    </div>
 
-    function start() {
-      var React = window.React;
-      var ReactDOM = window.ReactDOM;
-      var html = window.htm.bind(React.createElement);
-      var useEffect = React.useEffect;
-      var useState = React.useState;
+    <div class="grid">
+      <div>
+        <section id="about">
+          <h2>About</h2>
+          <p>Focused on building scalable, production‑grade AI systems. Interests centered on distributed systems and machine learning.</p>
+        </section>
 
-      var data = {
-        name: "Yash Gupta",
-        title: "Senior Software Engineer, Platform — C3 AI",
-        location: "Redwood City, CA · On‑site",
-        interests: "Distributed Systems · Machine Learning",
-        badges: ["Building Agentic AI Platform", "LLMs · Generative AI"],
-        about: "Focused on building scalable, production‑grade AI systems. Interests centered on distributed systems and machine learning.",
-        experience: [
-          {
-            role: "Senior Software Engineer, Platform — C3 AI",
-            meta: "Jul 2021 – Present · Redwood City, CA · On‑site",
-            link: "https://c3.ai/c3-agentic-ai-platform/",
-            details: ["Building Agentic AI Platform"],
-          },
-          {
-            role: "Corporate VC Associate — Corporate Startup Lab (CMU Swartz Center)",
-            meta: "Feb 2021 – May 2021 · United States",
-            details: [],
-          },
-          {
-            role: "Graduate Research Intern (CyLab & Bossanova) — Carnegie Mellon University",
-            meta: "May 2020 – May 2021 · Pittsburgh, PA",
-            details: [
-              "Bossanova Robotics (May–Aug 2020): Built ResNet50/EfficientNet models in PyTorch on 5M+ images to detect misplaced/out‑of‑stock products. Achieved >95% pairwise accuracy.",
-              "Prof. Osman Yagan (Jan–May 2021): Worked with ThaiBev to improve customer acquisition and revenue via targeted promotions.",
-            ],
-          },
-          {
-            role: "Research Assistant — Nanyang Technological University",
-            meta: "Jan 2019 – May 2019 · Singapore",
-            details: [],
-          },
-          {
-            role: "Research Assistant — Ghent University",
-            meta: "May 2018 – Jun 2018 · Gent Area, Belgium",
-            details: [],
-          },
-        ],
-        projects: [
-          { name: "PandasAI", meta: "Maker & contributor · 10k+ GitHub stars · $1M+ funding" },
-        ],
-            body: [
-              "The model is no longer the product. The product is the system: retrieval, tool use, evaluation, and monitoring working together under strict latency and cost constraints.",
-              "Teams that win treat prompts and tools like software artifacts — versioned, tested, and instrumented — and they route tasks across a portfolio of models rather than betting on a single one.",
-              "The new differentiator is feedback. Data flywheels, human review, and automated evals turn good demos into reliable systems.",
-              "We’re seeing a shift toward thinner model layers and thicker orchestration layers: caching, routing, agent policies, and observability.",
-              "Infrastructure is the advantage, and operational rigor is what scales AI beyond novelty.",
-            ],
-          },
-          {
-            title: "Agents Need Constraints, Not Magic",
-            date: "Feb 2026",
-            summary: "Durability comes from guardrails and verification.",
-            tags: ["Agents", "Safety", "Product"],
-            body: [
-              "Great agents look less like free‑form chat and more like constrained workflows. The secret is making actions explicit, reversible, and observable.",
-              "Permissions should be scoped, tool contracts should be clear, and every critical step should have a verification layer — automatic or human‑in‑the‑loop.",
-              "This approach feels slower at first, but it prevents silent failures, reduces risk, and builds user trust over time.",
-              "The best teams design for failure early: fallback plans, safe defaults, and metrics that make errors visible.",
-              "The future is not “hands‑off AI” — it’s “hands‑on leverage.”",
-            ],
-          },
-          {
-            title: "OpenClaw & the Personal AI Stack",
-            date: "Feb 2026",
-            summary: "Local‑first assistants and owned context.",
-            tags: ["OpenClaw", "Future", "Privacy"],
-            body: [
-              "Recent OpenClaw work points to a future where assistants run close to your data and integrate services without handing control to a single cloud vendor.",
-              "Local workflows, configurable tool gateways, and granular permissions make the assistant powerful but contained.",
-              "Pairing local context with selective cloud compute gives you speed, privacy, and flexibility — without sacrificing capability.",
-              "The endgame is a personal AI operating layer: secure, composable, and tuned to how you work.",
-              "That’s the path to assistants that feel less like chatbots and more like real infrastructure.",
-            ],
-          },
-        ],
-        education: [
-          { name: "Carnegie Mellon University", meta: "MS, Electrical & Computer Engineering · GPA 3.89/4.0", extra: "Eta Kappa Nu ECE Honors Society" },
-          { name: "Manipal Institute of Technology", meta: "BTech, Electronics & Communications Engineering · GPA 9.25/10", extra: "VP IE‑E&C" },
-        ],
-        awards: [
-          { name: "Nikola Tesla Electrical Engineering Scholar (declined)", meta: "Columbia University · Feb 2019" },
-          { name: "Gold Medal for Excellence in Academics", meta: "Mar 2017" },
-          { name: "Merit Scholarship", meta: "Manipal University · Jul 2015" },
-        ],
-        scores: [
-          { name: "GRE — 326 (168Q / 158V)", meta: "Oct 2018" },
-        ],
-        contact: {
-          linkedin: "https://www.linkedin.com/in/yash-cmu",
-          email: null,
-        }
-      };
-
-      var navItems = [
-        { id: 'about', label: 'About Me', type: 'scroll', href: '#about' },
-        { id: 'blog', label: 'Blog', type: 'link', href: 'blog.html' },
-      ];
-
-      function useReveal() {
-        useEffect(function () {
-          var elements = document.querySelectorAll('[data-reveal]');
-          var observer = new IntersectionObserver(
-            function (entries) {
-              entries.forEach(function (entry) {
-                if (entry.isIntersecting) entry.target.classList.add('visible');
-              });
-            },
-            { threshold: 0.12 }
-          );
-          elements.forEach(function (el) { observer.observe(el); });
-          return function () { observer.disconnect(); };
-        }, []);
-      }
-
-      function ThemeToggle() {
-        var _a = useState(function () { return localStorage.getItem('theme') || 'light'; }),
-          theme = _a[0],
-          setTheme = _a[1];
-
-        useEffect(function () {
-          document.documentElement.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
-          localStorage.setItem('theme', theme);
-        }, [theme]);
-
-        return html`<button className="btn" onClick=${function () { return setTheme(function (t) { return (t === 'dark' ? 'light' : 'dark'); }); }}>
-          ${theme === 'dark' ? 'Light mode' : 'Dark mode'}
-        </button>`;
-      }
-
-      function CopyEmail(props) {
-        var email = props.email;
-        var _a = useState(false), copied = _a[0], setCopied = _a[1];
-        if (!email) return null;
-        return html`<button className="btn" onClick=${function () {
-          navigator.clipboard.writeText(email);
-          setCopied(true);
-          setTimeout(function () { return setCopied(false); }, 1400);
-        }}>${copied ? 'Copied' : 'Copy email'}</button>`;
-      }
-
-      function App() {
-        var _a = useState(0), active = _a[0], setActive = _a[1];
-        var _b = useState(false), menuOpen = _b[0], setMenuOpen = _b[1];
-
-        function scrollTo(id) {
-          var el = document.getElementById(id);
-          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          setMenuOpen(false);
-        }
-
-        function handleNav(item, e) {
-          if (item.type === 'scroll') {
-            e.preventDefault();
-            scrollTo(item.id);
-          } else {
-            setMenuOpen(false);
-          }
-        }
-
-        useReveal();
-
-        return html`
-          <div className="wrap">
-            <div className="topbar">
-              <div className="brand">${data.name}</div>
-              <nav className="nav-links">
-                ${navItems.map(function (item) {
-                  return html`<a key=${item.label} href=${item.href} onClick=${function (e) { return handleNav(item, e); }}>
-                    ${item.label}
-                  </a>`;
-                })}
-              </nav>
-              <button className="menu-btn" onClick=${function () { return setMenuOpen(true); }}>Menu ☰</button>
+        <section style="margin-top:16px;">
+          <h2>Experience</h2>
+          <div class="timeline">
+            <div class="item">
+              <div class="role">Senior Software Engineer, Platform — C3 AI</div>
+              <div class="meta">Jul 2021 – Present · Redwood City, CA · On‑site</div>
+              <div class="meta">Building Agentic AI Platform · <a href="https://c3.ai/c3-agentic-ai-platform/" target="_blank" rel="noreferrer">Link</a></div>
             </div>
-
-            <div className=${`mobile-menu ${menuOpen ? 'open' : ''}`} onClick=${function () { return setMenuOpen(false); }}>
-              <div className="mobile-panel" onClick=${function (e) { return e.stopPropagation(); }}>
-                <button className="btn menu-close" onClick=${function () { return setMenuOpen(false); }}>Close ✕</button>
-                ${navItems.map(function (item) {
-                  return html`<a key=${item.label} href=${item.href} onClick=${function (e) { return handleNav(item, e); }}>
-                    ${item.label}
-                  </a>`;
-                })}
-              </div>
+            <div class="item">
+              <div class="role">Corporate VC Associate — Corporate Startup Lab (CMU Swartz Center)</div>
+              <div class="meta">Feb 2021 – May 2021 · United States</div>
             </div>
-
-            <div className="hero reveal" data-reveal>
-              <div className="eyebrow">Portfolio</div>
-              <h1>${data.name}</h1>
-              <div className="subtitle">${data.title}</div>
-              <div className="meta-line">
-                <span>${data.location}</span>
-                <span>Interests: ${data.interests}</span>
-              </div>
-              <div className="meta-line">
-                ${data.badges.map(function (b) { return html`<span key=${b} className="pill">${b}</span>`; })}
-              </div>
-              <div className="toolbar">
-                ${html`<${ThemeToggle} />`}
-              </div>
+            <div class="item">
+              <div class="role">Graduate Research Intern (CyLab & Bossanova) — Carnegie Mellon University</div>
+              <div class="meta">May 2020 – May 2021 · Pittsburgh, PA</div>
+              <div class="meta" style="margin-top:6px;">Bossanova Robotics (May–Aug 2020)</div>
+              <ul>
+                <li>Built ResNet50/EfficientNet models in PyTorch on 5M+ images to detect misplaced/out‑of‑stock products.</li>
+                <li>Achieved &gt;95% pairwise accuracy.</li>
+              </ul>
+              <div class="meta" style="margin-top:6px;">Prof. Osman Yagan (Jan–May 2021)</div>
+              <ul>
+                <li>Worked with ThaiBev to improve customer acquisition and revenue via targeted promotions.</li>
+              </ul>
             </div>
-
-            <div className="grid">
-              <div>
-                <section id="about" className="reveal" data-reveal>
-                  <h2>About</h2>
-                  <p>${data.about}</p>
-                </section>
-
-                <section id="experience" className="reveal" data-reveal style=${{ marginTop: 16 }}>
-                  <h2>Experience</h2>
-                  <div className="timeline">
-                    ${data.experience.map(function (x, idx) {
-                      return html`
-                        <div
-                          key=${x.role}
-                          className=${`item ${idx === active ? 'active' : ''}`}
-                          onMouseEnter=${function () { return setActive(idx); }}
-                          onFocus=${function () { return setActive(idx); }}
-                          onMouseLeave=${function () { return setActive(idx); }}
-                        >
-                          <div className="role">${x.role}</div>
-                          <div className="meta">${x.meta}</div>
-                          ${x.link ? html`<div className="meta"><a href=${x.link} target="_blank" rel="noreferrer">Link</a></div>` : null}
-                          ${idx === active && x.details && x.details.length ? html`<ul>${x.details.map(function (d) { return html`<li key=${d}>${d}</li>`; })}</ul>` : null}
-                        </div>
-                      `;
-                    })}
-                  </div>
-                </section>
-
-                <section id="projects" className="reveal" data-reveal style=${{ marginTop: 16 }}>
-                  <h2>Projects</h2>
-                  ${data.projects.map(function (p) {
-                    return html`
-                      <div className="item" key=${p.name}>
-                        <div className="role">${p.name}</div>
-                        <div className="meta">${p.meta}</div>
-                      </div>
-                    `;
-                  })}
-                </section>
-              </div>
-
-              <div>
-                <section id="education" className="reveal" data-reveal>
-                  <h2>Education</h2>
-                  ${data.education.map(function (e) {
-                    return html`
-                      <div className="item" key=${e.name}>
-                        <div className="role">${e.name}</div>
-                        <div className="meta">${e.meta}</div>
-                        <div className="meta">${e.extra}</div>
-                      </div>
-                    `;
-                  })}
-                </section>
-
-                <section id="awards" className="reveal" data-reveal style=${{ marginTop: 16 }}>
-                  <h2>Awards</h2>
-                  ${data.awards.map(function (a) {
-                    return html`
-                      <div className="item" key=${a.name}>
-                        <div className="role">${a.name}</div>
-                        <div className="meta">${a.meta}</div>
-                      </div>
-                    `;
-                  })}
-                </section>
-
-                <section id="scores" className="reveal" data-reveal style=${{ marginTop: 16 }}>
-                  <h2>Test Scores</h2>
-                  ${data.scores.map(function (s) {
-                    return html`
-                      <div className="item" key=${s.name}>
-                        <div className="role">${s.name}</div>
-                        <div className="meta">${s.meta}</div>
-                      </div>
-                    `;
-                  })}
-                </section>
-
-                <section id="contact" className="reveal" data-reveal style=${{ marginTop: 16 }}>
-                  <h2>Contact</h2>
-                  <div className="item"><a href=${data.contact.linkedin} target="_blank" rel="noreferrer">LinkedIn</a></div>
-                  <div className="toolbar">
-                    ${html`<${CopyEmail} email=${data.contact.email} />`}
-                  </div>
-                </section>
-
-                <div className="footer">Send skills + full projects + contact links any time and I’ll refine it.</div>
-              </div>
+            <div class="item">
+              <div class="role">Research Assistant — Nanyang Technological University</div>
+              <div class="meta">Jan 2019 – May 2019 · Singapore</div>
+            </div>
+            <div class="item">
+              <div class="role">Research Assistant — Ghent University</div>
+              <div class="meta">May 2018 – Jun 2018 · Gent Area, Belgium</div>
             </div>
           </div>
-        `;
-      }
+        </section>
 
-      ReactDOM.createRoot(document.getElementById('root')).render(html`<${App} />`);
-    }
+        <section style="margin-top:16px;">
+          <h2>Projects</h2>
+          <div class="item">
+            <div class="role">PandasAI</div>
+            <div class="meta">Maker & contributor · 10k+ GitHub stars · $1M+ funding</div>
+          </div>
+        </section>
+      </div>
 
-    loadHtm(start);
-  })();
+      <div>
+        <section>
+          <h2>Education</h2>
+          <div class="item">
+            <div class="role">Carnegie Mellon University</div>
+            <div class="meta">MS, Electrical & Computer Engineering · GPA 3.89/4.0</div>
+            <div class="meta">Eta Kappa Nu ECE Honors Society</div>
+          </div>
+          <div class="item">
+            <div class="role">Manipal Institute of Technology</div>
+            <div class="meta">BTech, Electronics & Communications Engineering · GPA 9.25/10</div>
+            <div class="meta">VP IE‑E&C</div>
+          </div>
+        </section>
+
+        <section style="margin-top:16px;">
+          <h2>Awards</h2>
+          <div class="item">
+            <div class="role">Nikola Tesla Electrical Engineering Scholar (declined)</div>
+            <div class="meta">Columbia University · Feb 2019</div>
+          </div>
+          <div class="item">
+            <div class="role">Gold Medal for Excellence in Academics</div>
+            <div class="meta">Mar 2017</div>
+          </div>
+          <div class="item">
+            <div class="role">Merit Scholarship</div>
+            <div class="meta">Manipal University · Jul 2015</div>
+          </div>
+        </section>
+
+        <section style="margin-top:16px;">
+          <h2>Test Scores</h2>
+          <div class="item">
+            <div class="role">GRE — 326 (168Q / 158V)</div>
+            <div class="meta">Oct 2018</div>
+          </div>
+        </section>
+
+        <section style="margin-top:16px;">
+          <h2>Contact</h2>
+          <div class="item"><a href="https://www.linkedin.com/in/yash-cmu" target="_blank" rel="noreferrer">LinkedIn</a></div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const toggle = document.getElementById('theme-toggle');
+    const setTheme = (t) => {
+      document.documentElement.setAttribute('data-theme', t);
+      localStorage.setItem('theme', t);
+      if (toggle) toggle.textContent = t === 'dark' ? 'Light mode' : 'Dark mode';
+    };
+    setTheme(localStorage.getItem('theme') || 'light');
+    if (toggle) toggle.addEventListener('click', () => setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
+
+    const menu = document.getElementById('mobile-menu');
+    document.getElementById('menu-open').addEventListener('click', () => menu.classList.add('open'));
+    document.getElementById('menu-close').addEventListener('click', () => menu.classList.remove('open'));
+    menu.addEventListener('click', (e) => { if (e.target === menu) menu.classList.remove('open'); });
   </script>
 </body>
 </html>
