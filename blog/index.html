@@ -132,7 +132,8 @@
 
     .subtitle { color: var(--muted); font-size: 1.05rem; }
 
-    .toolbar { display: flex; gap: 10px; align-items: center; margin-top: 6px; }
+    .toolbar { display: flex; gap: 10px; align-items: center; margin-top: 6px; flex-wrap: wrap; }
+    .category-toolbar { margin-top: 18px; margin-bottom: 6px; }
 
     .btn {
       border: 1px solid var(--border);
@@ -146,6 +147,7 @@
     }
 
     .btn:hover { border-color: var(--accent); color: var(--ink); }
+    .btn.is-active { border-color: var(--accent); color: var(--ink); background: rgba(47, 111, 237, 0.08); }
     .menu-close { justify-self: end; }
 
     .blog-list { display: grid; gap: 14px; margin-top: 18px; }
@@ -174,7 +176,6 @@
         <button id="menu-close" class="btn menu-close">Close ✕</button>
         <a href="/index.html#about">About Me</a>
         <a href="/blog/">Blog</a>
-        <button id="theme-toggle" class="btn">Dark mode</button>
       </div>
     </div>
 
@@ -182,24 +183,27 @@
       <div class="eyebrow">Writing</div>
       <h1>Blog</h1>
       <div class="subtitle">Notes on AI, philosophy, and the personal AI stack.</div>
-      <div class="toolbar">
-        <button id="theme-toggle-hero" class="btn">Dark mode</button>
+      <div class="toolbar category-toolbar">
+        <button class="btn category-btn" data-category="Tech/AI">Tech/AI</button>
+        <button class="btn category-btn" data-category="Life Philosophy & Self-Help">Life Philosophy & Self-Help</button>
+        <button class="btn category-btn" data-category="Fitness">Fitness</button>
+        <button class="btn category-btn" data-category="Personal Finance">Personal Finance</button>
       </div>
     </div>
 
     <section id="blog">
       <div class="blog-list">
-        <a class="blog-card" href="/blog/quiet-discipline/">
+        <a class="blog-card" href="/blog/quiet-discipline/" data-categories="Life Philosophy & Self-Help">
           <div class="blog-title">The Quiet Discipline of Small Promises</div>
           <div class="blog-meta">Feb 2026 · Why keeping tiny commitments changes your identity.</div>
           <div class="blog-tags"><span class="tag">Life Philosophy</span><span class="tag">Self‑Help</span></div>
         </a>
-        <a class="blog-card" href="/blog/ai-2026-stack/">
+        <a class="blog-card" href="/blog/ai-2026-stack/" data-categories="Tech/AI">
           <div class="blog-title">AI in 2026: The Stack Has Shifted</div>
           <div class="blog-meta">Feb 2026 · Models are table stakes; systems are the moat.</div>
           <div class="blog-tags"><span class="tag">AI Trends</span><span class="tag">Systems</span><span class="tag">Production</span></div>
         </a>
-        <a class="blog-card" href="/blog/openclaw-personal-ai/">
+        <a class="blog-card" href="/blog/openclaw-personal-ai/" data-categories="Tech/AI">
           <div class="blog-title">OpenClaw & the Personal AI Stack</div>
           <div class="blog-meta">Feb 2026 · Local‑first assistants and owned context.</div>
           <div class="blog-tags"><span class="tag">OpenClaw</span><span class="tag">Future</span><span class="tag">Privacy</span></div>
@@ -209,22 +213,31 @@
   </div>
 
   <script>
-    const setTheme = (t) => {
-      document.documentElement.setAttribute('data-theme', t);
-      localStorage.setItem('theme', t);
-      document.querySelectorAll('#theme-toggle,#theme-toggle-hero').forEach(btn => {
-        if (btn) btn.textContent = t === 'dark' ? 'Light mode' : 'Dark mode';
-      });
-    };
-    setTheme(localStorage.getItem('theme') || 'light');
-    document.querySelectorAll('#theme-toggle,#theme-toggle-hero').forEach(btn => {
-      btn && btn.addEventListener('click', () => setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
-    });
-
     const menu = document.getElementById('mobile-menu');
     document.getElementById('menu-open').addEventListener('click', () => menu.classList.add('open'));
     document.getElementById('menu-close').addEventListener('click', () => menu.classList.remove('open'));
     menu.addEventListener('click', (e) => { if (e.target === menu) menu.classList.remove('open'); });
+
+    const categoryButtons = document.querySelectorAll('.category-btn');
+    const blogCards = document.querySelectorAll('.blog-card');
+
+    const applyFilter = (category) => {
+      categoryButtons.forEach(btn => btn.classList.toggle('is-active', btn.dataset.category === category));
+      blogCards.forEach(card => {
+        const categories = (card.dataset.categories || '').split('|').map(c => c.trim()).filter(Boolean);
+        const matches = !category || categories.includes(category);
+        card.style.display = matches ? '' : 'none';
+      });
+    };
+
+    categoryButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const isActive = btn.classList.contains('is-active');
+        applyFilter(isActive ? '' : btn.dataset.category);
+      });
+    });
+
+    applyFilter('');
   </script>
 </body>
 </html>
