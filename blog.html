@@ -95,7 +95,9 @@
       padding: 20px;
       box-shadow: var(--shadow);
       display: grid;
-      gap: 10px;
+      gap: 12px;
+      align-content: start;
+      justify-items: start;
     }
 
     .mobile-panel a { border: none; color: var(--ink); text-decoration: none; }
@@ -145,7 +147,10 @@
       font-size: 0.85rem;
       color: var(--muted);
       cursor: pointer;
+      width: fit-content;
     }
+
+    .menu-close { justify-self: end; }
 
     .btn:hover { border-color: var(--accent); color: var(--ink); }
 
@@ -275,8 +280,8 @@
 
               <div className=${`mobile-menu ${menuOpen ? 'open' : ''}`} onClick=${function () { return setMenuOpen(false); }}>
                 <div className="mobile-panel" onClick=${function (e) { return e.stopPropagation(); }}>
+                  <button className="btn menu-close" onClick=${function () { return setMenuOpen(false); }}>Close ✕</button>
                   ${navItems.map(function (item) { return html`<a key=${item.label} href=${item.href}>${item.label}</a>`; })}
-                  ${html`<${ThemeToggle} />`}
                 </div>
               </div>
 

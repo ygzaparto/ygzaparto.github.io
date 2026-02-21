@@ -102,7 +102,9 @@
       padding: 20px;
       box-shadow: var(--shadow);
       display: grid;
-      gap: 10px;
+      gap: 12px;
+      align-content: start;
+      justify-items: start;
     }
 
     .mobile-panel a { border: none; color: var(--ink); }
@@ -275,7 +277,10 @@
       font-size: 0.85rem;
       color: var(--muted);
       cursor: pointer;
+      width: fit-content;
     }
+
+    .menu-close { justify-self: end; }
 
     .btn:hover { border-color: var(--accent); color: var(--ink); }
 
@@ -520,12 +525,12 @@
 
             <div className=${`mobile-menu ${menuOpen ? 'open' : ''}`} onClick=${function () { return setMenuOpen(false); }}>
               <div className="mobile-panel" onClick=${function (e) { return e.stopPropagation(); }}>
+                <button className="btn menu-close" onClick=${function () { return setMenuOpen(false); }}>Close ✕</button>
                 ${navItems.map(function (item) {
                   return html`<a key=${item.label} href=${item.href} onClick=${function (e) { return handleNav(item, e); }}>
                     ${item.label}
                   </a>`;
                 })}
-                ${html`<${ThemeToggle} />`}
               </div>
             </div>
 
@@ -636,28 +641,6 @@
                 <div className="footer">Send skills + full projects + contact links any time and I’ll refine it.</div>
               </div>
             </div>
-
-            <section id="blog" className="reveal" data-reveal style=${{ marginTop: 18 }}>
-              <h2>Blog</h2>
-              <div className="blog-list">
-                ${data.blogs.map(function (b, i) {
-                  return html`
-                    <details className="blog-card" key=${b.title}>
-                      <summary>
-                        <div className="blog-title">${b.title}</div>
-                        <div className="blog-meta">${b.date} · ${b.summary}</div>
-                        <div className="blog-tags">
-                          ${b.tags.map(function (t) { return html`<span key=${t} className="tag">${t}</span>`; })}
-                        </div>
-                      </summary>
-                      <div className="blog-body">
-                        ${b.body.map(function (p, idx) { return html`<p key=${`${i}-${idx}`}>${p}</p>`; })}
-                      </div>
-                    </details>
-                  `;
-                })}
-              </div>
-            </section>
           </div>
         `;
       }
