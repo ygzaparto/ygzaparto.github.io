@@ -284,32 +284,6 @@
 
     .btn:hover { border-color: var(--accent); color: var(--ink); }
 
-    .blog-list { display: grid; gap: 12px; }
-    .blog-card {
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 12px 14px;
-      background: rgba(255,255,255,0.7);
-      transition: box-shadow 0.3s ease, transform 0.3s ease;
-    }
-    [data-theme="dark"] .blog-card { background: rgba(22,25,29,0.9); }
-    .blog-card[open] { box-shadow: var(--shadow); transform: translateY(-1px); }
-    .blog-card summary { list-style: none; cursor: pointer; }
-    .blog-card summary::-webkit-details-marker { display: none; }
-    .blog-title { font-weight: 600; }
-    .blog-meta { color: var(--muted); font-size: 0.9rem; margin-top: 2px; }
-    .blog-tags { margin-top: 6px; display: flex; gap: 6px; flex-wrap: wrap; }
-    .tag {
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 3px 8px;
-      font-size: 0.75rem;
-      color: var(--muted);
-      background: rgba(250,249,247,0.7);
-    }
-    .blog-body { margin-top: 8px; }
-    .blog-body p { margin: 0 0 8px; }
-
     .footer {
       margin-top: 18px;
       color: var(--muted);
@@ -382,12 +356,6 @@
         projects: [
           { name: "PandasAI", meta: "Maker & contributor · 10k+ GitHub stars · $1M+ funding" },
         ],
-        blogs: [
-          {
-            title: "AI in 2026: The Stack Has Shifted",
-            date: "Feb 2026",
-            summary: "Models are table stakes; systems are the moat.",
-            tags: ["AI Trends", "Systems", "Production"],
             body: [
               "The model is no longer the product. The product is the system: retrieval, tool use, evaluation, and monitoring working together under strict latency and cost constraints.",
               "Teams that win treat prompts and tools like software artifacts — versioned, tested, and instrumented — and they route tasks across a portfolio of models rather than betting on a single one.",
