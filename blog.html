@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yash Gupta — Blog</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fraunces:wght@500;600;700&display=swap');
+
+    :root {
+      --bg: #f6f4f1;
+      --card: #ffffff;
+      --ink: #111111;
+      --muted: #5f5f5f;
+      --border: #e7e3dc;
+      --accent: #2f6fed;
+      --shadow: 0 12px 40px rgba(17, 17, 17, 0.10);
+    }
+
+    [data-theme="dark"] {
+      --bg: #0f1113;
+      --card: #16191d;
+      --ink: #f4f4f2;
+      --muted: #a0a6ad;
+      --border: #2a2f36;
+      --accent: #7aa2ff;
+      --shadow: 0 12px 40px rgba(0,0,0,0.45);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(255,255,255,0.9) 0%, transparent 50%),
+        radial-gradient(1000px 800px at 120% 10%, rgba(120,160,255,0.18) 0%, transparent 45%),
+        var(--bg);
+      color: var(--ink);
+      line-height: 1.55;
+      transition: background 0.6s ease, color 0.4s ease;
+    }
+
+    .wrap { max-width: 1040px; margin: 64px auto 96px; padding: 0 24px; }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .brand { font-weight: 600; letter-spacing: 0.01em; }
+
+    .nav-links {
+      display: flex;
+      gap: 16px;
+      font-size: 0.9rem;
+    }
+
+    .nav-links a { border: none; color: var(--muted); text-decoration: none; }
+    .nav-links a:hover { color: var(--ink); }
+
+    .menu-btn {
+      display: none;
+      border: 1px solid var(--border);
+      background: transparent;
+      padding: 6px 10px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .mobile-menu {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+      display: flex;
+      justify-content: flex-end;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+      z-index: 20;
+    }
+
+    .mobile-menu.open { opacity: 1; pointer-events: auto; }
+
+    .mobile-panel {
+      width: min(78%, 320px);
+      height: 100%;
+      background: var(--card);
+      border-left: 1px solid var(--border);
+      padding: 20px;
+      box-shadow: var(--shadow);
+      display: grid;
+      gap: 10px;
+    }
+
+    .mobile-panel a { border: none; color: var(--ink); text-decoration: none; }
+
+    @media (max-width: 780px) {
+      .nav-links { display: none; }
+      .menu-btn { display: inline-flex; align-items: center; gap: 6px; }
+    }
+
+    .hero {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      display: grid;
+      gap: 10px;
+    }
+
+    .eyebrow {
+      font-size: 0.85rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .eyebrow::before { content: ""; width: 10px; height: 10px; border-radius: 999px; background: var(--accent); }
+
+    h1 {
+      font-family: Fraunces, ui-serif, Georgia, serif;
+      font-size: clamp(2.4rem, 4vw, 3.4rem);
+      margin: 0;
+    }
+
+    .subtitle { color: var(--muted); font-size: 1.05rem; }
+
+    .toolbar { display: flex; gap: 10px; align-items: center; margin-top: 6px; }
+
+    .btn {
+      border: 1px solid var(--border);
+      background: transparent;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .btn:hover { border-color: var(--accent); color: var(--ink); }
+
+    .blog-list { display: grid; gap: 14px; margin-top: 18px; }
+    .blog-card {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 16px;
+      background: rgba(255,255,255,0.7);
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+    }
+    [data-theme="dark"] .blog-card { background: rgba(22,25,29,0.9); }
+    .blog-card[open] { box-shadow: var(--shadow); transform: translateY(-1px); }
+    .blog-card summary { list-style: none; cursor: pointer; }
+    .blog-card summary::-webkit-details-marker { display: none; }
+    .blog-title { font-weight: 600; }
+    .blog-meta { color: var(--muted); font-size: 0.9rem; margin-top: 2px; }
+    .blog-tags { margin-top: 6px; display: flex; gap: 6px; flex-wrap: wrap; }
+    .tag {
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 3px 8px;
+      font-size: 0.75rem;
+      color: var(--muted);
+      background: rgba(250,249,247,0.7);
+    }
+    .blog-body { margin-top: 10px; }
+    .blog-body p { margin: 0 0 10px; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script>
+    (function () {
+      function loadHtm(cb) {
+        if (window.htm) return cb();
+        var s = document.createElement('script');
+        s.src = 'https://unpkg.com/htm@3.1.1/dist/htm.umd.js';
+        s.onload = cb;
+        document.head.appendChild(s);
+      }
+
+      function start() {
+        var React = window.React;
+        var ReactDOM = window.ReactDOM;
+        var html = window.htm.bind(React.createElement);
+        var useEffect = React.useEffect;
+        var useState = React.useState;
+
+        var blogs = [
+          {
+            title: "AI in 2026: The Stack Has Shifted",
+            date: "Feb 2026",
+            summary: "Models are table stakes; systems are the moat.",
+            tags: ["AI Trends", "Systems", "Production"],
+            body: [
+              "The model is no longer the product. The product is the system: retrieval, tool use, evaluation, and monitoring working together under strict latency and cost constraints.",
+              "Teams that win treat prompts and tools like software artifacts — versioned, tested, and instrumented — and they route tasks across a portfolio of models rather than betting on a single one.",
+              "The new differentiator is feedback. Data flywheels, human review, and automated evals turn good demos into reliable systems.",
+              "We’re seeing a shift toward thinner model layers and thicker orchestration layers: caching, routing, agent policies, and observability.",
+              "Infrastructure is the advantage, and operational rigor is what scales AI beyond novelty.",
+            ],
+          },
+          {
+            title: "Agents Need Constraints, Not Magic",
+            date: "Feb 2026",
+            summary: "Durability comes from guardrails and verification.",
+            tags: ["Agents", "Safety", "Product"],
+            body: [
+              "Great agents look less like free‑form chat and more like constrained workflows. The secret is making actions explicit, reversible, and observable.",
+              "Permissions should be scoped, tool contracts should be clear, and every critical step should have a verification layer — automatic or human‑in‑the‑loop.",
+              "This approach feels slower at first, but it prevents silent failures, reduces risk, and builds user trust over time.",
+              "The best teams design for failure early: fallback plans, safe defaults, and metrics that make errors visible.",
+              "The future is not “hands‑off AI” — it’s “hands‑on leverage.”",
+            ],
+          },
+          {
+            title: "OpenClaw & the Personal AI Stack",
+            date: "Feb 2026",
+            summary: "Local‑first assistants and owned context.",
+            tags: ["OpenClaw", "Future", "Privacy"],
+            body: [
+              "Recent OpenClaw work points to a future where assistants run close to your data and integrate services without handing control to a single cloud vendor.",
+              "Local workflows, configurable tool gateways, and granular permissions make the assistant powerful but contained.",
+              "Pairing local context with selective cloud compute gives you speed, privacy, and flexibility — without sacrificing capability.",
+              "The endgame is a personal AI operating layer: secure, composable, and tuned to how you work.",
+              "That’s the path to assistants that feel less like chatbots and more like real infrastructure.",
+            ],
+          },
+        ];
+
+        var navItems = [
+          { label: 'About Me', href: 'index.html#about' },
+          { label: 'Blog', href: 'blog.html' },
+        ];
+
+        function ThemeToggle() {
+          var _a = useState(function () { return localStorage.getItem('theme') || 'light'; }),
+            theme = _a[0],
+            setTheme = _a[1];
+
+          useEffect(function () {
+            document.documentElement.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
+            localStorage.setItem('theme', theme);
+          }, [theme]);
+
+          return html`<button className="btn" onClick=${function () { return setTheme(function (t) { return (t === 'dark' ? 'light' : 'dark'); }); }}>
+            ${theme === 'dark' ? 'Light mode' : 'Dark mode'}
+          </button>`;
+        }
+
+        function App() {
+          var _a = useState(false), menuOpen = _a[0], setMenuOpen = _a[1];
+
+          return html`
+            <div className="wrap">
+              <div className="topbar">
+                <div className="brand">Yash Gupta</div>
+                <nav className="nav-links">
+                  ${navItems.map(function (item) { return html`<a key=${item.label} href=${item.href}>${item.label}</a>`; })}
+                </nav>
+                <button className="menu-btn" onClick=${function () { return setMenuOpen(true); }}>Menu ☰</button>
+              </div>
+
+              <div className=${`mobile-menu ${menuOpen ? 'open' : ''}`} onClick=${function () { return setMenuOpen(false); }}>
+                <div className="mobile-panel" onClick=${function (e) { return e.stopPropagation(); }}>
+                  ${navItems.map(function (item) { return html`<a key=${item.label} href=${item.href}>${item.label}</a>`; })}
+                  ${html`<${ThemeToggle} />`}
+                </div>
+              </div>
+
+              <div className="hero">
+                <div className="eyebrow">Writing</div>
+                <h1>Blog</h1>
+                <div className="subtitle">Notes on AI, agents, and the personal AI stack.</div>
+                <div className="toolbar">${html`<${ThemeToggle} />`}</div>
+              </div>
+
+              <section id="blog">
+                <div className="blog-list">
+                  ${blogs.map(function (b, i) {
+                    return html`
+                      <details className="blog-card" key=${b.title}>
+                        <summary>
+                          <div className="blog-title">${b.title}</div>
+                          <div className="blog-meta">${b.date} · ${b.summary}</div>
+                          <div className="blog-tags">
+                            ${b.tags.map(function (t) { return html`<span key=${t} className="tag">${t}</span>`; })}
+                          </div>
+                        </summary>
+                        <div className="blog-body">
+                          ${b.body.map(function (p, idx) { return html`<p key=${`${i}-${idx}`}>${p}</p>`; })}
+                        </div>
+                      </details>
+                    `;
+                  })}
+                </div>
+              </section>
+            </div>
+          `;
+        }
+
+        ReactDOM.createRoot(document.getElementById('root')).render(html`<${App} />`);
+      }
+
+      loadHtm(start);
+    })();
+  </script>
+</body>
+</html>

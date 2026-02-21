@@ -437,14 +437,8 @@
       };
 
       var navItems = [
-        { id: 'about', label: 'About' },
-        { id: 'experience', label: 'Experience' },
-        { id: 'projects', label: 'Projects' },
-        { id: 'blog', label: 'Blog' },
-        { id: 'education', label: 'Education' },
-        { id: 'awards', label: 'Awards' },
-        { id: 'scores', label: 'Scores' },
-        { id: 'contact', label: 'Contact' },
+        { id: 'about', label: 'About Me', type: 'scroll', href: '#about' },
+        { id: 'blog', label: 'Blog', type: 'link', href: 'blog.html' },
       ];
 
       function useReveal() {
@@ -499,6 +493,15 @@
           setMenuOpen(false);
         }
 
+        function handleNav(item, e) {
+          if (item.type === 'scroll') {
+            e.preventDefault();
+            scrollTo(item.id);
+          } else {
+            setMenuOpen(false);
+          }
+        }
+
         useReveal();
 
         return html`
@@ -507,7 +510,7 @@
               <div className="brand">${data.name}</div>
               <nav className="nav-links">
                 ${navItems.map(function (item) {
-                  return html`<a key=${item.id} href=${`#${item.id}`} onClick=${function (e) { e.preventDefault(); scrollTo(item.id); }}>
+                  return html`<a key=${item.label} href=${item.href} onClick=${function (e) { return handleNav(item, e); }}>
                     ${item.label}
                   </a>`;
                 })}
@@ -518,7 +521,7 @@
             <div className=${`mobile-menu ${menuOpen ? 'open' : ''}`} onClick=${function () { return setMenuOpen(false); }}>
               <div className="mobile-panel" onClick=${function (e) { return e.stopPropagation(); }}>
                 ${navItems.map(function (item) {
-                  return html`<a key=${item.id} href=${`#${item.id}`} onClick=${function (e) { e.preventDefault(); scrollTo(item.id); }}>
+                  return html`<a key=${item.label} href=${item.href} onClick=${function (e) { return handleNav(item, e); }}>
                     ${item.label}
                   </a>`;
                 })}
