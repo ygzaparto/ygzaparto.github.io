@@ -14,7 +14,17 @@
       --muted: #5f5f5f;
       --border: #e7e3dc;
       --accent: #2f6fed;
-      --shadow: 0 8px 30px rgba(17, 17, 17, 0.08);
+      --shadow: 0 12px 40px rgba(17, 17, 17, 0.10);
+    }
+
+    [data-theme="dark"] {
+      --bg: #0f1113;
+      --card: #16191d;
+      --ink: #f4f4f2;
+      --muted: #a0a6ad;
+      --border: #2a2f36;
+      --accent: #7aa2ff;
+      --shadow: 0 12px 40px rgba(0,0,0,0.45);
     }
 
     * { box-sizing: border-box; }
@@ -22,11 +32,13 @@
     body {
       margin: 0;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      background: radial-gradient(1200px 600px at 10% -10%, #fff 0%, var(--bg) 45%),
-                  radial-gradient(1000px 800px at 120% 10%, #f2f6ff 0%, var(--bg) 45%),
-                  var(--bg);
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(255,255,255,0.9) 0%, transparent 50%),
+        radial-gradient(1000px 800px at 120% 10%, rgba(120,160,255,0.18) 0%, transparent 45%),
+        var(--bg);
       color: var(--ink);
       line-height: 1.55;
+      transition: background 0.6s ease, color 0.4s ease;
     }
 
     .wrap {
@@ -43,6 +55,19 @@
       box-shadow: var(--shadow);
       display: grid;
       gap: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: -40% -20% auto auto;
+      width: 260px;
+      height: 260px;
+      background: radial-gradient(circle at center, rgba(47,111,237,0.18), transparent 60%);
+      opacity: 0.7;
+      pointer-events: none;
     }
 
     .eyebrow {
@@ -71,10 +96,7 @@
       letter-spacing: -0.02em;
     }
 
-    .subtitle {
-      color: var(--muted);
-      font-size: 1.05rem;
-    }
+    .subtitle { color: var(--muted); font-size: 1.05rem; }
 
     .meta-line {
       display: flex;
@@ -86,7 +108,7 @@
 
     .pill {
       border: 1px solid var(--border);
-      background: #faf9f7;
+      background: rgba(250,249,247,0.8);
       padding: 6px 10px;
       border-radius: 999px;
       font-size: 0.85rem;
@@ -109,6 +131,12 @@
       border-radius: 16px;
       padding: 18px 20px;
       box-shadow: 0 1px 0 rgba(0,0,0,0.02);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    section:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
     }
 
     h2 {
@@ -131,6 +159,7 @@
 
     .timeline .item {
       position: relative;
+      padding-bottom: 4px;
     }
 
     .timeline .item::before {
@@ -141,13 +170,49 @@
       width: 8px;
       height: 8px;
       border-radius: 50%;
+      background: var(--border);
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .timeline .item.active::before {
       background: var(--accent);
+      transform: scale(1.2);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     ul { margin: 8px 0 0 20px; padding: 0; }
 
     a { color: var(--ink); text-decoration: none; border-bottom: 1px solid #d5d1c9; }
     a:hover { border-bottom-color: #999; }
+
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-top: 6px;
+    }
+
+    .btn {
+      border: 1px solid var(--border);
+      background: transparent;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .btn:hover { border-color: var(--accent); color: var(--ink); }
 
     .footer {
       margin-top: 18px;
@@ -157,120 +222,238 @@
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="hero">
-      <div class="eyebrow">Portfolio</div>
-      <h1>Yash Gupta</h1>
-      <div class="subtitle">Senior Software Engineer, Platform — C3 AI</div>
-      <div class="meta-line">
-        <span>Redwood City, CA · On‑site</span>
-        <span>Interests: Distributed Systems · Machine Learning</span>
-      </div>
-      <div class="meta-line">
-        <span class="pill">Building Agentic AI Platform</span>
-        <span class="pill">LLMs · Generative AI</span>
-      </div>
-    </div>
+  <div id="root"></div>
 
-    <div class="grid">
-      <div>
-        <section>
-          <h2>About</h2>
-          <p>Focused on building scalable, production‑grade AI systems. Interests centered on distributed systems and machine learning.</p>
-        </section>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-        <section style="margin-top:16px;">
-          <h2>Experience</h2>
-          <div class="timeline">
-            <div class="item">
-              <div class="role">Senior Software Engineer, Platform — C3 AI</div>
-              <div class="meta">Jul 2021 – Present · Redwood City, CA · On‑site</div>
-              <div class="meta">Building Agentic AI Platform · <a href="https://c3.ai/c3-agentic-ai-platform/" target="_blank" rel="noreferrer">Link</a></div>
+  <script type="text/babel">
+    const { useEffect, useMemo, useState } = React;
+
+    const data = {
+      name: "Yash Gupta",
+      title: "Senior Software Engineer, Platform — C3 AI",
+      location: "Redwood City, CA · On‑site",
+      interests: "Distributed Systems · Machine Learning",
+      badges: ["Building Agentic AI Platform", "LLMs · Generative AI"],
+      about: "Focused on building scalable, production‑grade AI systems. Interests centered on distributed systems and machine learning.",
+      experience: [
+        {
+          role: "Senior Software Engineer, Platform — C3 AI",
+          meta: "Jul 2021 – Present · Redwood City, CA · On‑site",
+          link: "https://c3.ai/c3-agentic-ai-platform/",
+          details: ["Building Agentic AI Platform"],
+        },
+        {
+          role: "Corporate VC Associate — Corporate Startup Lab (CMU Swartz Center)",
+          meta: "Feb 2021 – May 2021 · United States",
+          details: [],
+        },
+        {
+          role: "Graduate Research Intern (CyLab & Bossanova) — Carnegie Mellon University",
+          meta: "May 2020 – May 2021 · Pittsburgh, PA",
+          details: [
+            "Bossanova Robotics (May–Aug 2020): Built ResNet50/EfficientNet models in PyTorch on 5M+ images to detect misplaced/out‑of‑stock products. Achieved >95% pairwise accuracy.",
+            "Prof. Osman Yagan (Jan–May 2021): Worked with ThaiBev to improve customer acquisition and revenue via targeted promotions.",
+          ],
+        },
+        {
+          role: "Research Assistant — Nanyang Technological University",
+          meta: "Jan 2019 – May 2019 · Singapore",
+          details: [],
+        },
+        {
+          role: "Research Assistant — Ghent University",
+          meta: "May 2018 – Jun 2018 · Gent Area, Belgium",
+          details: [],
+        },
+      ],
+      projects: [
+        { name: "PandasAI", meta: "Maker & contributor · 10k+ GitHub stars · $1M+ funding" },
+      ],
+      education: [
+        { name: "Carnegie Mellon University", meta: "MS, Electrical & Computer Engineering · GPA 3.89/4.0", extra: "Eta Kappa Nu ECE Honors Society" },
+        { name: "Manipal Institute of Technology", meta: "BTech, Electronics & Communications Engineering · GPA 9.25/10", extra: "VP IE‑E&C" },
+      ],
+      awards: [
+        { name: "Nikola Tesla Electrical Engineering Scholar (declined)", meta: "Columbia University · Feb 2019" },
+        { name: "Gold Medal for Excellence in Academics", meta: "Mar 2017" },
+        { name: "Merit Scholarship", meta: "Manipal University · Jul 2015" },
+      ],
+      scores: [
+        { name: "GRE — 326 (168Q / 158V)", meta: "Oct 2018" },
+      ],
+      contact: {
+        linkedin: "https://www.linkedin.com/in/yash-cmu",
+        email: null, // set to your public email if you want a copy button
+      }
+    };
+
+    function useReveal() {
+      useEffect(() => {
+        const elements = document.querySelectorAll('[data-reveal]');
+        const observer = new IntersectionObserver(
+          entries => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+          },
+          { threshold: 0.12 }
+        );
+        elements.forEach(el => observer.observe(el));
+        return () => observer.disconnect();
+      }, []);
+    }
+
+    function ThemeToggle() {
+      const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
+
+      useEffect(() => {
+        document.documentElement.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
+        localStorage.setItem('theme', theme);
+      }, [theme]);
+
+      return (
+        <button className="btn" onClick={() => setTheme(t => (t === 'dark' ? 'light' : 'dark'))}>
+          {theme === 'dark' ? 'Light mode' : 'Dark mode'}
+        </button>
+      );
+    }
+
+    function CopyEmail({ email }) {
+      const [copied, setCopied] = useState(false);
+      if (!email) return null;
+      return (
+        <button
+          className="btn"
+          onClick={() => {
+            navigator.clipboard.writeText(email);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 1400);
+          }}
+        >
+          {copied ? 'Copied' : 'Copy email'}
+        </button>
+      );
+    }
+
+    function App() {
+      const [active, setActive] = useState(0);
+      useReveal();
+
+      return (
+        <div className="wrap">
+          <div className="hero reveal" data-reveal>
+            <div className="eyebrow">Portfolio</div>
+            <h1>{data.name}</h1>
+            <div className="subtitle">{data.title}</div>
+            <div className="meta-line">
+              <span>{data.location}</span>
+              <span>Interests: {data.interests}</span>
             </div>
-            <div class="item">
-              <div class="role">Corporate VC Associate — Corporate Startup Lab (CMU Swartz Center)</div>
-              <div class="meta">Feb 2021 – May 2021 · United States</div>
+            <div className="meta-line">
+              {data.badges.map(b => <span key={b} className="pill">{b}</span>)}
             </div>
-            <div class="item">
-              <div class="role">Graduate Research Intern (CyLab & Bossanova) — Carnegie Mellon University</div>
-              <div class="meta">May 2020 – May 2021 · Pittsburgh, PA</div>
-              <div class="meta" style="margin-top:6px;">Bossanova Robotics (May–Aug 2020)</div>
-              <ul>
-                <li>Built ResNet50/EfficientNet models in PyTorch on 5M+ images to detect misplaced/out‑of‑stock products.</li>
-                <li>Achieved &gt;95% pairwise accuracy.</li>
-              </ul>
-              <div class="meta" style="margin-top:6px;">Prof. Osman Yagan (Jan–May 2021)</div>
-              <ul>
-                <li>Worked with ThaiBev to improve customer acquisition and revenue via targeted promotions.</li>
-              </ul>
-            </div>
-            <div class="item">
-              <div class="role">Research Assistant — Nanyang Technological University</div>
-              <div class="meta">Jan 2019 – May 2019 · Singapore</div>
-            </div>
-            <div class="item">
-              <div class="role">Research Assistant — Ghent University</div>
-              <div class="meta">May 2018 – Jun 2018 · Gent Area, Belgium</div>
+            <div className="toolbar">
+              <ThemeToggle />
             </div>
           </div>
-        </section>
 
-        <section style="margin-top:16px;">
-          <h2>Projects</h2>
-          <div class="item">
-            <div class="role">PandasAI</div>
-            <div class="meta">Maker & contributor · 10k+ GitHub stars · $1M+ funding</div>
-          </div>
-        </section>
-      </div>
+          <div className="grid">
+            <div>
+              <section className="reveal" data-reveal>
+                <h2>About</h2>
+                <p>{data.about}</p>
+              </section>
 
-      <div>
-        <section>
-          <h2>Education</h2>
-          <div class="item">
-            <div class="role">Carnegie Mellon University</div>
-            <div class="meta">MS, Electrical & Computer Engineering · GPA 3.89/4.0</div>
-            <div class="meta">Eta Kappa Nu ECE Honors Society</div>
-          </div>
-          <div class="item">
-            <div class="role">Manipal Institute of Technology</div>
-            <div class="meta">BTech, Electronics & Communications Engineering · GPA 9.25/10</div>
-            <div class="meta">VP IE‑E&amp;C</div>
-          </div>
-        </section>
+              <section className="reveal" data-reveal style={{ marginTop: 16 }}>
+                <h2>Experience</h2>
+                <div className="timeline">
+                  {data.experience.map((x, idx) => (
+                    <div
+                      key={x.role}
+                      className={`item ${idx === active ? 'active' : ''}`}
+                      onMouseEnter={() => setActive(idx)}
+                      onFocus={() => setActive(idx)}
+                      onMouseLeave={() => setActive(idx)}
+                    >
+                      <div className="role">{x.role}</div>
+                      <div className="meta">{x.meta}</div>
+                      {x.link && (
+                        <div className="meta">
+                          <a href={x.link} target="_blank" rel="noreferrer">Link</a>
+                        </div>
+                      )}
+                      {idx === active && x.details?.length > 0 && (
+                        <ul>
+                          {x.details.map(d => <li key={d}>{d}</li>)}
+                        </ul>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </section>
 
-        <section style="margin-top:16px;">
-          <h2>Awards</h2>
-          <div class="item">
-            <div class="role">Nikola Tesla Electrical Engineering Scholar (declined)</div>
-            <div class="meta">Columbia University · Feb 2019</div>
-          </div>
-          <div class="item">
-            <div class="role">Gold Medal for Excellence in Academics</div>
-            <div class="meta">Mar 2017</div>
-          </div>
-          <div class="item">
-            <div class="role">Merit Scholarship</div>
-            <div class="meta">Manipal University · Jul 2015</div>
-          </div>
-        </section>
+              <section className="reveal" data-reveal style={{ marginTop: 16 }}>
+                <h2>Projects</h2>
+                {data.projects.map(p => (
+                  <div className="item" key={p.name}>
+                    <div className="role">{p.name}</div>
+                    <div className="meta">{p.meta}</div>
+                  </div>
+                ))}
+              </section>
+            </div>
 
-        <section style="margin-top:16px;">
-          <h2>Test Scores</h2>
-          <div class="item">
-            <div class="role">GRE — 326 (168Q / 158V)</div>
-            <div class="meta">Oct 2018</div>
+            <div>
+              <section className="reveal" data-reveal>
+                <h2>Education</h2>
+                {data.education.map(e => (
+                  <div className="item" key={e.name}>
+                    <div className="role">{e.name}</div>
+                    <div className="meta">{e.meta}</div>
+                    <div className="meta">{e.extra}</div>
+                  </div>
+                ))}
+              </section>
+
+              <section className="reveal" data-reveal style={{ marginTop: 16 }}>
+                <h2>Awards</h2>
+                {data.awards.map(a => (
+                  <div className="item" key={a.name}>
+                    <div className="role">{a.name}</div>
+                    <div className="meta">{a.meta}</div>
+                  </div>
+                ))}
+              </section>
+
+              <section className="reveal" data-reveal style={{ marginTop: 16 }}>
+                <h2>Test Scores</h2>
+                {data.scores.map(s => (
+                  <div className="item" key={s.name}>
+                    <div className="role">{s.name}</div>
+                    <div className="meta">{s.meta}</div>
+                  </div>
+                ))}
+              </section>
+
+              <section className="reveal" data-reveal style={{ marginTop: 16 }}>
+                <h2>Contact</h2>
+                <div className="item"><a href={data.contact.linkedin} target="_blank" rel="noreferrer">LinkedIn</a></div>
+                <div className="toolbar">
+                  <CopyEmail email={data.contact.email} />
+                </div>
+              </section>
+
+              <div className="footer">Send skills + full projects + contact links any time and I’ll refine it.</div>
+            </div>
           </div>
-        </section>
+        </div>
+      );
+    }
 
-        <section style="margin-top:16px;">
-          <h2>Contact</h2>
-          <div class="item"><a href="https://www.linkedin.com/in/yash-cmu" target="_blank" rel="noreferrer">LinkedIn</a></div>
-        </section>
-
-        <div class="footer">Send skills + full projects + contact links any time and I’ll refine it.</div>
-      </div>
-    </div>
-  </div>
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
 </body>
 </html>
