@@ -3,11 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-  <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="Expires" content="0" />
   <title>Yash Gupta — Blog</title>
   <style>
+
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fraunces:wght@500;600;700&display=swap');
 
     :root {
@@ -47,12 +45,7 @@
 
     .brand { font-weight: 600; letter-spacing: 0.01em; }
 
-    .nav-links {
-      display: flex;
-      gap: 16px;
-      font-size: 0.9rem;
-    }
-
+    .nav-links { display: flex; gap: 16px; font-size: 0.9rem; }
     .nav-links a { border: none; color: var(--muted); text-decoration: none; }
     .nav-links a:hover { color: var(--ink); }
 
@@ -83,13 +76,16 @@
 
     .mobile-panel {
       width: min(78%, 320px);
-      height: 100%;
+      height: auto;
+      max-height: 70vh;
+      margin: 16px;
       background: var(--card);
-      border-left: 1px solid var(--border);
-      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
       box-shadow: var(--shadow);
       display: grid;
-      gap: 12px;
+      gap: 10px;
       align-content: start;
       justify-items: start;
     }
@@ -123,16 +119,12 @@
 
     .eyebrow::before { content: ""; width: 10px; height: 10px; border-radius: 999px; background: var(--accent); }
 
-    h1 {
-      font-family: Fraunces, ui-serif, Georgia, serif;
-      font-size: clamp(2.4rem, 4vw, 3.4rem);
-      margin: 0;
-    }
+    h1 { font-family: Fraunces, ui-serif, Georgia, serif; font-size: clamp(2.4rem, 4vw, 3.4rem); margin: 0; }
 
     .subtitle { color: var(--muted); font-size: 1.05rem; }
 
-    .toolbar { display: flex; gap: 10px; align-items: center; margin-top: 6px; }
-    .category-toolbar { flex-wrap: wrap; }
+    .toolbar { display: flex; gap: 10px; align-items: center; margin-top: 6px; flex-wrap: wrap; }
+    .category-toolbar { margin-top: 18px; margin-bottom: 6px; }
 
     .btn {
       border: 1px solid var(--border);
@@ -146,11 +138,7 @@
     }
 
     .btn:hover { border-color: var(--accent); color: var(--ink); }
-    .category-btn.is-active {
-      border-color: var(--accent);
-      color: var(--ink);
-      background: rgba(122,162,255,0.12);
-    }
+    .category-btn.is-active { border-color: var(--accent); color: var(--ink); background: rgba(47, 111, 237, 0.08); }
     .menu-close { justify-self: end; }
 
     .blog-list { display: grid; gap: 14px; margin-top: 18px; }
@@ -160,29 +148,12 @@
       color: var(--muted);
       text-align: center;
     }
-    .blog-card {
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 14px 16px;
-      background: rgba(255,255,255,0.7);
-      transition: box-shadow 0.3s ease, transform 0.3s ease;
-    }
-    .blog-card[open] { box-shadow: var(--shadow); transform: translateY(-1px); }
-    .blog-card summary { list-style: none; cursor: pointer; }
-    .blog-card summary::-webkit-details-marker { display: none; }
+    .blog-card { border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; background: rgba(255,255,255,0.7); transition: box-shadow 0.3s ease, transform 0.3s ease; text-decoration: none; color: var(--ink); }
+    .blog-card:hover { box-shadow: var(--shadow); transform: translateY(-1px); }
     .blog-title { font-weight: 600; }
     .blog-meta { color: var(--muted); font-size: 0.9rem; margin-top: 2px; }
     .blog-tags { margin-top: 6px; display: flex; gap: 6px; flex-wrap: wrap; }
-    .tag {
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 3px 8px;
-      font-size: 0.75rem;
-      color: var(--muted);
-      background: rgba(250,249,247,0.7);
-    }
-    .blog-body { margin-top: 10px; }
-    .blog-body p { margin: 0 0 10px; }
+    .tag { border: 1px solid var(--border); border-radius: 999px; padding: 3px 8px; font-size: 0.75rem; color: var(--muted); background: rgba(250,249,247,0.7); }
     .site-footer { margin-top: 32px; color: var(--muted); font-size: 0.9rem; text-align: center; }
   </style>
 </head>
@@ -191,8 +162,8 @@
     <div class="topbar">
       <div class="brand">Yash Gupta</div>
       <nav class="nav-links">
-        <a href="index.html#about">About Me</a>
-        <a href="blog.html">Blog</a>
+        <a href="/index.html#about">About Me</a>
+        <a href="/blog/">Blog</a>
       </nav>
       <button id="menu-open" class="menu-btn">Menu ☰</button>
     </div>
@@ -200,8 +171,8 @@
     <div id="mobile-menu" class="mobile-menu">
       <div class="mobile-panel">
         <button id="menu-close" class="btn menu-close">Close ✕</button>
-        <a href="index.html#about">About Me</a>
-        <a href="blog.html">Blog</a>
+        <a href="/index.html#about">About Me</a>
+        <a href="/blog/">Blog</a>
       </div>
     </div>
 
@@ -209,11 +180,10 @@
       <div class="eyebrow">Writing</div>
       <h1>Blog</h1>
       <div class="subtitle">Notes on AI, philosophy, and the personal AI stack.</div>
-      <div class="toolbar">
-      </div>
       <div class="toolbar category-toolbar">
         <button class="btn category-btn" data-category="All">All</button>
         <button class="btn category-btn" data-category="Tech/AI">Tech/AI</button>
+        <button class="btn category-btn" data-category="Coding">Coding</button>
         <button class="btn category-btn" data-category="Life Philosophy & Self-Help">Life Philosophy & Self-Help</button>
         <button class="btn category-btn" data-category="Fitness">Fitness</button>
         <button class="btn category-btn" data-category="Personal Finance">Personal Finance</button>
@@ -223,81 +193,32 @@
     <section id="blog">
       <div id="no-blogs-message" class="no-blogs">No blogs available for this category.</div>
       <div class="blog-list">
-        <details class="blog-card" data-categories="Life Philosophy & Self-Help" open>
-          <summary>
-            <div class="blog-title">The Quiet Discipline of Small Promises</div>
-            <div class="blog-meta">Feb 2026 · Why keeping tiny commitments changes your identity.</div>
-            <div class="blog-tags">
-              <span class="tag">Life Philosophy</span>
-              <span class="tag">Self‑Help</span>
-            </div>
-          </summary>
-          <div class="blog-body">
-            <p>Most self‑help fails because it asks for a personality rewrite. The quieter alternative is smaller: make a promise you can keep, then keep it — daily.</p>
-            <p>Across self‑improvement communities, the recurring theme isn’t a lack of information; it’s a lack of traction. People know what to do but can’t keep momentum when life gets messy.</p>
-            <p>The antidote is a minimum reliable action — a version of your habit so small it survives stress: two pushups, five minutes of reading, one paragraph of journaling.</p>
-            <p>What changes isn’t the action itself, but the identity signal. Each kept promise is a vote: I am the kind of person who follows through.</p>
-            <p>Over time, the minimum rises naturally. The habit grows not by force, but by evidence. You stop negotiating with yourself because you’ve built trust.</p>
-            <p>Philosophy calls this integrity; psychology calls it self‑efficacy. Either way, it’s the same practice: align your words with your actions, even when the action is small.</p>
-            <p>Today’s exercise: pick one small promise you can keep in under five minutes. Do it every day for two weeks. Then decide what to grow.</p>
-          </div>
-        </details>
-
-        <details class="blog-card" data-categories="Tech/AI">
-          <summary>
-            <div class="blog-title">AI in 2026: The Stack Has Shifted</div>
-            <div class="blog-meta">Feb 2026 · Models are table stakes; systems are the moat.</div>
-            <div class="blog-tags">
-              <span class="tag">AI Trends</span>
-              <span class="tag">Systems</span>
-              <span class="tag">Production</span>
-            </div>
-          </summary>
-          <div class="blog-body">
-            <p>The model is no longer the product. The product is the system: retrieval, tool use, evaluation, and monitoring working together under tight latency and cost constraints.</p>
-            <p>Winning teams treat prompts and tools like software artifacts — versioned, tested, and instrumented — and route tasks across a portfolio of models rather than betting on a single one.</p>
-            <p>The new differentiator is feedback. Data flywheels, human review, and automated evals turn good demos into reliable systems.</p>
-            <p>We’re seeing thinner model layers and thicker orchestration layers: caching, routing, agent policies, and observability.</p>
-            <p>Infrastructure is the advantage, and operational rigor is what scales AI beyond novelty.</p>
-          </div>
-        </details>
-
-        <details class="blog-card" data-categories="Tech/AI">
-          <summary>
-            <div class="blog-title">OpenClaw & the Personal AI Stack</div>
-            <div class="blog-meta">Feb 2026 · Local‑first assistants and owned context.</div>
-            <div class="blog-tags">
-              <span class="tag">OpenClaw</span>
-              <span class="tag">Future</span>
-              <span class="tag">Privacy</span>
-            </div>
-          </summary>
-          <div class="blog-body">
-            <p>Recent OpenClaw work points to a future where assistants run close to your data and integrate services without handing control to a single cloud vendor.</p>
-            <p>Local workflows, configurable tool gateways, and granular permissions make the assistant powerful but contained.</p>
-            <p>Pairing local context with selective cloud compute gives you speed, privacy, and flexibility — without sacrificing capability.</p>
-            <p>The endgame is a personal AI operating layer: secure, composable, and tuned to how you work.</p>
-          </div>
-        </details>
+        <a class="blog-card" href="/blog/quiet-discipline/" data-categories="Life Philosophy & Self-Help">
+          <div class="blog-title">The Quiet Discipline of Small Promises</div>
+          <div class="blog-meta">Feb 2026 · Why keeping tiny commitments changes your identity.</div>
+          <div class="blog-tags"><span class="tag">Life Philosophy</span><span class="tag">Self‑Help</span></div>
+        </a>
+        <a class="blog-card" href="/blog/ai-2026-stack/" data-categories="Tech/AI">
+          <div class="blog-title">AI in 2026: The Stack Has Shifted</div>
+          <div class="blog-meta">Feb 2026 · Models are table stakes; systems are the moat.</div>
+          <div class="blog-tags"><span class="tag">AI Trends</span><span class="tag">Systems</span><span class="tag">Production</span></div>
+        </a>
+        <a class="blog-card" href="/blog/openclaw-personal-ai/" data-categories="Tech/AI">
+          <div class="blog-title">OpenClaw & the Personal AI Stack</div>
+          <div class="blog-meta">Feb 2026 · Local‑first assistants and owned context.</div>
+          <div class="blog-tags"><span class="tag">OpenClaw</span><span class="tag">Future</span><span class="tag">Privacy</span></div>
+        </a>
       </div>
-    </section>
-
-    <section id="comments" style="margin-top:18px;">
-      <h2>Comments</h2>
-      <div id="comments-container"></div>
     </section>
     <footer class="site-footer">Developed and maintained with ❤️ by zaparto (yash’s agent)</footer>
   </div>
 
   <script>
-
-    // mobile menu
     const menu = document.getElementById('mobile-menu');
     document.getElementById('menu-open').addEventListener('click', () => menu.classList.add('open'));
     document.getElementById('menu-close').addEventListener('click', () => menu.classList.remove('open'));
     menu.addEventListener('click', (e) => { if (e.target === menu) menu.classList.remove('open'); });
 
-    // category filtering
     const categoryButtons = document.querySelectorAll('.category-btn');
     const blogCards = document.querySelectorAll('.blog-card');
     const noBlogsMessage = document.getElementById('no-blogs-message');
@@ -306,10 +227,10 @@
       let visibleCount = 0;
       categoryButtons.forEach(btn => btn.classList.toggle('is-active', btn.dataset.category === category));
       blogCards.forEach(card => {
-        const categories = (card.dataset.categories || '').split('|').map(c => c.trim());
-        const show = (category === 'All') || categories.includes(category);
-        card.style.display = show ? '' : 'none';
-        if (show) visibleCount++;
+        const categories = (card.dataset.categories || '').split('|').map(c => c.trim()).filter(Boolean);
+        const matches = category === 'All' || categories.includes(category);
+        card.style.display = matches ? '' : 'none';
+        if (matches) visibleCount++;
       });
       if (noBlogsMessage) {
         noBlogsMessage.style.display = visibleCount === 0 ? 'block' : 'none';
@@ -319,19 +240,6 @@
     if (categoryButtons.length) {
       categoryButtons.forEach(btn => btn.addEventListener('click', () => applyFilter(btn.dataset.category)));
       applyFilter('All');
-    }
-
-    // comments (Utterances)
-    const container = document.getElementById('comments-container');
-    if (container) {
-      const s = document.createElement('script');
-      s.src = 'https://utteranc.es/client.js';
-      s.async = true;
-      s.setAttribute('repo', 'ygzaparto/ygzaparto.github.io');
-      s.setAttribute('issue-term', 'pathname');
-      s.setAttribute('theme', 'github-light');
-      s.setAttribute('crossorigin', 'anonymous');
-      container.appendChild(s);
     }
   </script>
 </body>

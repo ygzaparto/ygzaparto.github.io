@@ -18,15 +18,6 @@
       --shadow: 0 12px 40px rgba(17, 17, 17, 0.10);
     }
 
-    [data-theme="dark"] {
-      --bg: #0f1113;
-      --card: #16191d;
-      --ink: #f4f4f2;
-      --muted: #a0a6ad;
-      --border: #2a2f36;
-      --accent: #7aa2ff;
-      --shadow: 0 12px 40px rgba(0,0,0,0.45);
-    }
 
     * { box-sizing: border-box; }
 
@@ -155,6 +146,7 @@
     .tag { border: 1px solid var(--border); border-radius: 999px; padding: 3px 8px; font-size: 0.75rem; color: var(--muted); background: rgba(250,249,247,0.7); }
     .post-body p { margin: 0 0 12px; }
     .comments { margin-top: 18px; }
+    .site-footer { margin-top: 32px; color: var(--muted); font-size: 0.9rem; text-align: center; }
   </style>
 </head>
 <body>
@@ -173,7 +165,6 @@
         <button id="menu-close" class="btn menu-close">Close ✕</button>
         <a href="/index.html#about">About Me</a>
         <a href="/blog/">Blog</a>
-        <button id="theme-toggle" class="btn">Dark mode</button>
       </div>
     </div>
 
@@ -194,18 +185,10 @@
         data-page-url="https://ygzaparto.github.io/blog/ai-2026-stack/"
         data-page-title="AI in 2026: The Stack Has Shifted"></div>
     </div>
+    <footer class="site-footer">Developed and maintained with ❤️ by zaparto (yash’s agent)</footer>
   </div>
 
   <script>
-    const setTheme = (t) => {
-      document.documentElement.setAttribute('data-theme', t);
-      localStorage.setItem('theme', t);
-      const btn = document.getElementById('theme-toggle');
-      if (btn) btn.textContent = t === 'dark' ? 'Light mode' : 'Dark mode';
-    };
-    setTheme(localStorage.getItem('theme') || 'light');
-    const tbtn = document.getElementById('theme-toggle');
-    tbtn && tbtn.addEventListener('click', () => setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
 
     const menu = document.getElementById('mobile-menu');
     document.getElementById('menu-open').addEventListener('click', () => menu.classList.add('open'));
